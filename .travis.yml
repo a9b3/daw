@@ -1,0 +1,38 @@
+language: node_js
+node_js:
+  - "6.7"
+
+sudo: required
+
+services:
+  - docker
+#   - redis-server
+
+# env:
+#   - MONGODB_VERSION=2.6.10
+
+cache:
+  directories:
+    - node_modules
+
+# If you want to use mongodb along with docker you have to do this and set
+# MONGODB_VERSION in env up top
+# before_install:
+#   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+#   - tar xfz mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+#   - export PATH=`pwd`/mongodb-linux-x86_64-$MONGODB_VERSION/bin:$PATH
+#   - mkdir -p data/db
+#   - mongod --dbpath=data/db &
+#   - sleep 3
+
+install:
+  - npm install
+
+before_script:
+  - export CONTINUOUS_INTEGRATION=true
+
+script:
+  - npm test
+
+after_success:
+  - test $TRAVIS_BRANCH = "production" && npm run deploy
