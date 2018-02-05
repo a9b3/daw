@@ -1,0 +1,26 @@
+.meter {
+  --meterMainColor: var(--brand, black);
+  --meterSecondaryColor: #{"rgba(var(--brandRGB), .3)"};
+  --meterBackgroundColor: var(--slate, gray);
+  --meterPeakColor: var(--brand);
+  background: blue;
+
+  .background {
+    fill: var(--meterBackgroundColor);
+  }
+
+  .secondary {
+    fill: var(--meterSecondaryColor);
+    transition: all .1s;
+  }
+
+  .main {
+    fill: var(--meterMainColor);
+    transition: all .1s;
+  }
+
+  .peak {
+    fill: var(--meterPeakColor);
+    transition: all .1s;
+  }
+}

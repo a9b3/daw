@@ -1,11 +1,11 @@
 .knob {
   --knobActiveColor: var(--brand, black);
-  --knobInactiveColor: var(--lightgray, gray);
+  --knobInactiveColor: var(--slate, gray);
 
   circle {
     width: 100%;
     height: 100%;
-    stroke-width: 10;
+    stroke-width: 1em;
     fill: none;
   }
 

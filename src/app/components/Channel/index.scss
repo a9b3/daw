@@ -1,7 +1,37 @@
 .channel {
-  border: 1px solid blue;
-}
+  --channelBgColor: #{"rgba(var(--slateRGB), .8)"};
 
-.svg {
+  width: 100%;
+  height: 100%;
+  background: var(--channelBgColor);
+  display: grid;
+  grid: "control meters" auto
+        / auto auto;
 
+  .control {
+    grid-area: control;
+    padding: var(--spacing5);
+    text-align: center;
+
+    .knob {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    .switch + .switch {
+      margin-top: var(--spacing5);
+    }
+  }
+
+  .meters {
+    grid-area: meters;
+    padding: var(--spacing5);
+
+    .meter {
+      width: 8px;
+    }
+    .meter + .meter {
+      margin-left: 4px;
+    }
+  }
 }
