@@ -1,0 +1,13 @@
+.bar {
+  --barMainColor: var(--brand, black);
+  --barBackgroundColor: var(--lightgray, gray);
+
+  .background {
+    fill: var(--barBackgroundColor);
+  }
+
+  .main {
+    fill: var(--barMainColor);
+    transition: all .1s;
+  }
+}

@@ -1,0 +1,55 @@
+:root {
+  /* RGB */
+  --whiteRGB            : 255, 255, 255;
+  --blackRGB            : 0, 0, 0;
+  --grayRGB             : 54, 55, 50;
+  --lightgrayRGB        : 230, 230, 230;
+  --cyanRGB             : 129, 210, 199;
+  --blueRGB             : 102, 195, 255;
+  --yellowRGB           : 255, 201, 55;
+  --pinkRGB             : 212, 175, 185;
+  --greenRGB            : 33, 161, 121;
+  --redRGB              : 198, 123, 125;
+  --slateRGB            : 46, 61, 73;
+  --brandRGB            : 80, 227, 194;
+
+  /* Colors */
+  --white               : rgb(var(--whiteRGB));
+  --black               : rgb(var(--blackRGB));
+  --gray                : rgb(var(--grayRGB));
+  --lightgray           : rgb(var(--lightgrayRGB));
+  --cyan                : rgb(var(--cyanRGB));
+  --blue                : rgb(var(--blueRGB));
+  --yellow              : rgb(var(--yellowRGB));
+  --pink                : rgb(var(--pinkRGB));
+  --green               : rgb(var(--greenRGB));
+  --red                 : rgb(var(--redRGB));
+  --slate               : rgb(var(--slateRGB));
+  --brand               : rgb(var(--brandRGB));
+
+  /* Semantic Colors */
+  --error               : var(--red);
+  --warning             : var(--yellow);
+  --success             : var(--green);
+
+  /* Spacing */
+  --spacing1            : 6rem;
+  --spacing2            : 4rem;
+  --spacing3            : 2rem;
+  --spacing4            : 1rem;
+  --spacing5            : .6rem;
+  --spacing6            : .4rem;
+
+  /* Font */
+  --size1               : 3em;
+  --size2               : 2.25em;
+  --size3               : 1.75em;
+  --size4               : 1.125em;
+  --size5               : 1em;
+  --size6               : .8em;
+
+  /* Misc */
+  --readingWidth        : 80em;
+  --headerColor         : rgba(0,0,0,.8);
+  --secondary           : #0D0A08;
+}

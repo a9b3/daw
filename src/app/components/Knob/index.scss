@@ -1,0 +1,20 @@
+.knob {
+  --knobActiveColor: var(--brand, black);
+  --knobInactiveColor: var(--lightgray, gray);
+
+  circle {
+    width: 100%;
+    height: 100%;
+    stroke-width: 10;
+    fill: none;
+  }
+
+  .active {
+    stroke: var(--knobActiveColor);
+    transition: all .1s;
+  }
+
+  .background {
+    stroke: var(--knobInactiveColor);
+  }
+}

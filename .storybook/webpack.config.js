@@ -13,6 +13,7 @@ module.exports = (storybookBaseConfig, configType) => {
       /\.json$/,
       /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
       /\.(png|jpe?g|gif|ico)$/i,
+      /\.ejs$/,
     ],
     loader: require.resolve('file-loader'),
   })
@@ -58,12 +59,6 @@ module.exports = (storybookBaseConfig, configType) => {
           modules: true,
         },
       },
-      {
-        loader: 'postcss-loader',
-        options: {
-          ident: 'postcss',
-        },
-      },
       'sass-loader',
     ],
   })
@@ -77,25 +72,11 @@ module.exports = (storybookBaseConfig, configType) => {
           modules: true,
         },
       },
-      {
-        loader: 'postcss-loader',
-        options: {
-          ident: 'postcss',
-        },
-      },
     ],
   })
 
   storybookBaseConfig.resolve.modules.concat(
     (process.env.NODE_PATH || '').split(path.delimiter).filter(Boolean),
-  )
-
-  storybookBaseConfig.plugins.push(
-    new webpack.ProvidePlugin({
-      _: 'lodash',
-      React: 'react',
-      cssModule: 'react-css-modules',
-    }),
   )
 
   return storybookBaseConfig
