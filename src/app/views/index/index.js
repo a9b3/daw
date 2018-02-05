@@ -1,24 +1,29 @@
-import styles           from './styles.scss'
-import React            from 'react'
+import styles               from './styles.scss'
+import { inject, observer } from 'mobx-react'
+import React                from 'react'
 
-import { Mixer, Sound } from 'app/mixer'
+import { Mixer, Sound }     from 'app/mixer'
 
-async function foo() {
-  const mixer = new Mixer()
-  const channel = mixer.addChannel()
-  const sound = new Sound()
-  channel.insert(sound.output)
+// const sound = new Sound()
+// async function foo() {
+//   const mixer = new Mixer()
+//   const channel = mixer.addChannel()
+//
+//   sound.output.connect(channel.input)
+//   await sound.load(
+//     require('../../../../../../../Desktop/documents/Music/Download/Maria Takeuchi 竹内 まりや Plastic Love-3bNITQR4Uso.mp3'),
+//   )
+//   sound.play()
+// }
+//
+// foo()
 
-  await sound.load(
-    '../../../../../../../Desktop/documents/Music/Download/Maria Takeuchi 竹内 まりや Plastic Love-3bNITQR4Uso.mp3',
-  )
-  sound.play()
-}
-
-foo()
-
+@inject('mixer')
+@observer
 export default class Index extends React.Component {
   render() {
-    return <div className={styles.index}>Hello World!</div>
+    const { mixer } = this.props
+    console.log(this.props.mixer.value)
+    return <div className={styles.index}>hi</div>
   }
 }
