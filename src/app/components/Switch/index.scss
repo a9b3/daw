@@ -4,17 +4,18 @@
   --buttonOnBgColor: var(--brand);
   --buttonOnColor: var(--white);
 
-  cursor: pointer;
-  padding: var(--buttonPadding);
-  box-shadow: 0 2px 4px rgba(black, .2);
   background: var(--buttonBgColor);
+  box-shadow: 0 2px 4px rgba(black, .2);
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  font-weight: 500;
+  padding: var(--buttonPadding);
+  text-transform: uppercase;
+  letter-spacing: .05em;
   transition: all .2s;
   width: 100%;
-  display: block;
-  font-weight: 500;
-  text-transform: uppercase;
-  font-size: .6em;
-  color: white;
 
   &--on {
     background: var(--buttonOnBgColor);
