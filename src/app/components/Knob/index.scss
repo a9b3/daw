@@ -2,19 +2,26 @@
   --knobActiveColor: var(--brand, black);
   --knobInactiveColor: var(--slate, gray);
 
+  position: relative;
+
+  .triangle {
+    fill: var(--knobActiveColor);
+  }
+
   circle {
     width: 100%;
     height: 100%;
     stroke-width: 1em;
     fill: none;
+    stroke-linecap: round;
   }
 
-  .active {
+  .activeCircle {
     stroke: var(--knobActiveColor);
     transition: all .1s;
   }
 
-  .background {
+  .backgroundCircle {
     stroke: var(--knobInactiveColor);
   }
 }

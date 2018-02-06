@@ -10,12 +10,14 @@ export default function Knob({ value, rotate = 90, ...rest }) {
 
   return (
     <svg
-      viewBox={'0 0 100 100'}
+      viewBox={'0 0 110 100'}
       preserveAspectRatio="xMinYMin"
       style={{ transform: `rotate(${rotate}deg)` }}
       className={cx(styles.knob, rest.className)}
     >
-      <circle cx="50" cy="50" r={radius} className={styles.background} />
+      <polygon points="110,40 100,50 110,60" className={styles.triangle} />
+      <div className={styles.indicator}>hi</div>
+      <circle cx="50" cy="50" r={radius} className={styles.backgroundCircle} />
       <circle
         cx="50"
         cy="50"
@@ -24,7 +26,7 @@ export default function Knob({ value, rotate = 90, ...rest }) {
           strokeDasharray: circumference,
           strokeDashoffset: strokePercentage,
         }}
-        className={styles.active}
+        className={styles.activeCircle}
       />
     </svg>
   )
