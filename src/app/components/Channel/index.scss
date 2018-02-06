@@ -7,11 +7,15 @@
   display: grid;
   grid: "control meters" auto
         / auto auto;
+  color: #{"rgba(var(--whiteRGB), .7)"};
+  font-size: .8em;
 
   .control {
     grid-area: control;
     padding: var(--spacing5);
     text-align: center;
+    display: flex;
+    flex-direction: column;
 
     .knob {
       width: 50%;
@@ -20,6 +24,10 @@
 
     .switch + .switch {
       margin-top: var(--spacing5);
+    }
+
+    .end {
+      margin-top: auto;
     }
   }
 

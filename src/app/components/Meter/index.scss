@@ -1,9 +1,8 @@
 .meter {
-  --meterMainColor: var(--brand, black);
-  --meterSecondaryColor: #{"rgba(var(--brandRGB), .3)"};
+  --meterMainColor: var(--green, black);
+  --meterSecondaryColor: #{"rgba(var(--greenRGB), .3)"};
   --meterBackgroundColor: var(--slate, gray);
-  --meterPeakColor: var(--brand);
-  background: blue;
+  --meterPeakColor: var(--green);
 
   .background {
     fill: var(--meterBackgroundColor);

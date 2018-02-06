@@ -15,11 +15,21 @@ export default class Channel extends React.Component {
     return (
       <div className={styles.channel}>
         <div className={styles.control}>
+          <div>Pan</div>
           <Knob className={styles.knob} value={10} rotate={270} />
-          <Switch on className={styles.switch}>
+          <div>0</div>
+          <Switch style={{ marginTop: '10px' }} on className={styles.switch}>
             Mute
           </Switch>
           <Switch className={styles.switch}>Record</Switch>
+          <Switch className={styles.switch}>Solo</Switch>
+          <Switch style={{ height: '40px' }} className={styles.switch} on>
+            1
+          </Switch>
+
+          <div className={styles.end}>
+            <Switch className={styles.switch}>●</Switch>
+          </div>
         </div>
         <div className={styles.meters}>
           <Meter className={styles.meter} peak={60} main={40} secondary={50} />

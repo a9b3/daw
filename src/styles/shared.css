@@ -12,6 +12,7 @@
   --redRGB              : 198, 123, 125;
   --slateRGB            : 46, 61, 73;
   --brandRGB            : 80, 227, 194;
+  --greenRGB            : 0, 218, 71;
 
   /* Colors */
   --white               : rgb(var(--whiteRGB));
@@ -26,6 +27,7 @@
   --red                 : rgb(var(--redRGB));
   --slate               : rgb(var(--slateRGB));
   --brand               : rgb(var(--brandRGB));
+  --green               : rgb(var(--greenRGB));
 
   /* Semantic Colors */
   --error               : var(--red);

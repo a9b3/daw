@@ -8,7 +8,9 @@ storiesOf('Channel', module)
   .addDecorator(withKnobs)
   .add('default', () => {
     return (
-      <div style={{ width: '120px', height: '300px' }}>
+      <div style={{ width: '360px', height: '300px', display: 'flex' }}>
+        <Channel />
+        <Channel />
         <Channel />
       </div>
     )
