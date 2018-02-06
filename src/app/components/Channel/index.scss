@@ -1,28 +1,26 @@
 .channel {
-  --channelBgColor: #{"rgba(var(--slateRGB), .8)"};
+  --channelBgColor: #{"rgba(var(--slateRGB), .75)"};
 
-  width: 100%;
-  height: 100%;
   background: var(--channelBgColor);
+  color: #{"rgba(var(--whiteRGB), .8)"};
+  font-size: .8em;
+  height: 100%;
+  overflow: auto;
+  padding: var(--spacing4);
+  width: 100%;
   display: grid;
+  grid-column-gap: var(--spacing4);
   grid: "control meters" auto
         / auto auto;
-  color: #{"rgba(var(--whiteRGB), .7)"};
-  font-size: .8em;
 
   .control {
     grid-area: control;
-    padding: var(--spacing5);
     text-align: center;
     display: flex;
     flex-direction: column;
+    width: 4em;
 
-    .knob {
-      width: 50%;
-      margin: 0 auto;
-    }
-
-    .switch + .switch {
+    .control__item + .control__item {
       margin-top: var(--spacing5);
     }
 
@@ -33,13 +31,12 @@
 
   .meters {
     grid-area: meters;
-    padding: var(--spacing5);
 
     .meter {
-      width: 8px;
+      width: 40%;
     }
     .meter + .meter {
-      margin-left: 4px;
+      margin-left: 20%;
     }
   }
 }
