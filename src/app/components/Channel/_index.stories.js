@@ -9,8 +9,8 @@ storiesOf('Channel', module)
   .add('default', () => {
     return (
       <div style={{ width: '200px', height: '320px', display: 'flex' }}>
-        <Channel channelIndex={1} />
-        <Channel channelIndex={2} />
+        <Channel channelIndex={1} panPosition={0.3} />
+        <Channel channelIndex={2} panPosition={-0.2} />
       </div>
     )
   })

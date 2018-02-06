@@ -9,15 +9,15 @@ import PanKnob   from './PanKnob'
 export default class Channel extends React.Component {
   static propTypes = {
     channelIndex: PropTypes.number,
-    pan: PropTypes.number,
+    panPosition: PropTypes.number,
   }
 
   render() {
-    const { pan, channelIndex } = this.props
+    const { panPosition, channelIndex } = this.props
     return (
       <div className={styles.channel}>
         <section className={styles.control}>
-          <PanKnob pan={pan} className={styles.control__item} />
+          <PanKnob panPosition={panPosition} className={styles.control__item} />
           <Switch on className={styles.control__item}>
             {channelIndex}
           </Switch>
