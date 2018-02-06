@@ -16,13 +16,13 @@ export default function Meter({ main = 0, secondary = 0, peak = 0, ...rest }) {
         className={styles.secondary}
         width="100%"
         height="100%"
-        style={{ transform: `translateY(${100 - secondary}%)` }}
+        y={`${100 - secondary}%`}
       />
       <rect
         className={styles.main}
         width="100%"
         height="100%"
-        style={{ transform: `translateY(${100 - main}%)` }}
+        y={`${100 - main}%`}
       />
       <rect
         className={styles.peak}
