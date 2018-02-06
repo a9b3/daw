@@ -1,4 +1,5 @@
 import styles    from './index.scss'
+import cx        from 'classnames'
 import PropTypes from 'prop-types'
 import React     from 'react'
 
@@ -10,12 +11,19 @@ export default class Channel extends React.Component {
   static propTypes = {
     channelIndex: PropTypes.number,
     panPosition: PropTypes.number,
+    meterData: PropTypes.object,
   }
 
   render() {
-    const { panPosition, channelIndex } = this.props
+    const {
+      channel,
+      meterData,
+      panPosition,
+      channelIndex,
+      ...rest
+    } = this.props
     return (
-      <div className={styles.channel}>
+      <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
           <PanKnob panPosition={panPosition} className={styles.control__item} />
           <Switch on className={styles.control__item}>
@@ -30,8 +38,18 @@ export default class Channel extends React.Component {
           </div>
         </section>
         <section className={styles.meters}>
-          <Meter className={styles.meter} peak={80} main={20} secondary={50} />
-          <Meter className={styles.meter} peak={70} main={45} secondary={60} />
+          <Meter
+            className={styles.meter}
+            peak={meterData.left.peak}
+            main={meterData.left.main}
+            secondary={50}
+          />
+          <Meter
+            className={styles.meter}
+            peak={meterData.right.peak}
+            main={meterData.right.main}
+            secondary={50}
+          />
         </section>
       </div>
     )

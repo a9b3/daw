@@ -6,6 +6,12 @@ export default class Mixer {
   channels = []
   sends = []
 
+  constructor({ channels = [] } = {}) {
+    channels.forEach(channel => {
+      this.addChannel()
+    })
+  }
+
   addChannel() {
     const channel = new Channel({ outputSource: this.master.input })
     this.channels.push(channel)

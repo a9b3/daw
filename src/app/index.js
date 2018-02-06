@@ -1,6 +1,7 @@
 // react-hot-loader/patch has to be first
 import 'react-hot-loader/patch'
 import 'styles/index.scss'
+import 'styles/shared.css'
 
 import React            from 'react'
 import { render }       from 'react-dom'

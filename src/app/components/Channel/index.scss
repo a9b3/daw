@@ -1,5 +1,5 @@
 .channel {
-  --channelBgColor: #{"rgba(var(--slateRGB), .75)"};
+  --channelBgColor: var(--gray);
 
   background: var(--channelBgColor);
   color: #{"rgba(var(--whiteRGB), .8)"};
