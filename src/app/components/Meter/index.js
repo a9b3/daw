@@ -28,7 +28,7 @@ export default function Meter({ main = 0, secondary = 0, peak = 0, ...rest }) {
         className={styles.peak}
         width="100%"
         height="2px"
-        style={{ transform: `translateY(${100 - peak}%)` }}
+        y={`${100 - peak}%`}
       />
     </svg>
   )
