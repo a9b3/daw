@@ -4,6 +4,8 @@
   --meterBackgroundColor: var(--slate, gray);
   --meterPeakColor: var(--green);
 
+  border-radius: 2px;
+
   .background {
     fill: var(--meterBackgroundColor);
   }
