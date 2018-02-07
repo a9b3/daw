@@ -43,6 +43,9 @@ export default class Channel {
   setGain = value => {
     this.gain = value
     this.output.gain.setTargetAtTime(this.gain, audioContext.currentTime, 0)
+    if (this.isMute) {
+      this.isMute = false
+    }
   }
 
   @action
