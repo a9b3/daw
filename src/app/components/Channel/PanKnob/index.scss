@@ -1,13 +1,16 @@
 .panKnob {
+  cursor: pointer;
+  transition: all .2s;
+
+  &:hover {
+    opacity: .8;
+  }
+
   .header {
     margin-bottom: var(--spacing5);
   }
 
   .knob {
     margin-bottom: var(--spacing5);
-  }
-
-  .p {
-
   }
 }

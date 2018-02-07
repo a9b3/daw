@@ -12,7 +12,9 @@ export default function PanKnob({ panPosition = 0, ...rest }) {
     <div {...rest} className={cx(styles.panKnob, rest.className)}>
       <header className={styles.header}>Pan</header>
       <Knob className={styles.knob} value={value} rotate={270} />
-      <Switch>{`${value} ${value === 0 ? '' : value < 0 ? 'L' : 'R'}`}</Switch>
+      <Switch>{`${value.toFixed(1)} ${
+        value === 0 ? '' : value.toFixed(1) < 0 ? 'L' : 'R'
+      }`}</Switch>
     </div>
   )
 }

@@ -7,12 +7,13 @@ import React        from 'react'
 import Switch       from '../Switch'
 import ChannelMeter from './ChannelMeters'
 import PanKnob      from './PanKnob'
+import DragSelect   from 'components/DragSelect'
 
 @observer
 export default class Channel extends React.Component {
   static propTypes = {
     channel: PropTypes.object.isRequired,
-    label: PropTypes.number,
+    label: PropTypes.string,
   }
 
   render() {
@@ -20,10 +21,12 @@ export default class Channel extends React.Component {
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
-          <PanKnob
-            panPosition={channel.panPosition}
-            className={styles.control__item}
-          />
+          <DragSelect onSelect={channel.setPanPosition}>
+            <PanKnob
+              panPosition={channel.panPosition}
+              className={styles.control__item}
+            />
+          </DragSelect>
           <Switch on className={styles.control__item}>
             {label}
           </Switch>
