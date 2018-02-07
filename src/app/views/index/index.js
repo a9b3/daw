@@ -18,9 +18,7 @@ export default class Index extends React.Component {
     const { mixer } = this.props
     const sound = new Sound()
     sound.output.connect(mixer.channels[0].input)
-    await sound.load(
-      require('../../../../../../../Desktop/documents/Music/Download/Maria Takeuchi 竹内 まりや Plastic Love-3bNITQR4Uso.mp3'),
-    )
+    await sound.load(require('assets/song.mp3'))
     sound.play()
   }
 
