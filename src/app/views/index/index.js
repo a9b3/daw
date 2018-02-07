@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import PropTypes            from 'prop-types'
 import React                from 'react'
 
-import { Mixer, Sound }     from 'app/mixer'
+import { Sound }            from 'app/mixer'
 
 import Channel              from 'components/Channel'
 
@@ -31,16 +31,16 @@ export default class Index extends React.Component {
         {mixer.channels.map((channel, i) => {
           return (
             <Channel
-              key={i}
+              key={`${i}`}
               style={{ width: 120, height: 320 }}
-              label={i}
+              label={`${i}`}
               channel={channel}
             />
           )
         })}
 
         <Channel
-          key={2}
+          key={`ok`}
           style={{ width: 120, height: 320, marginLeft: 'auto' }}
           label={'mtr'}
           channel={mixer.master}

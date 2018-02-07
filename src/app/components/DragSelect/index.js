@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types'
-import React     from 'react'
+import { noop }    from 'lodash'
+import { compose } from 'lodash/fp'
+import PropTypes   from 'prop-types'
+import React       from 'react'
 
 export default class DragSelect extends React.Component {
   static propTypes = {
-    children: PropTypes.node,
     onSelect: PropTypes.func,
+    render: PropTypes.func,
+    renderProps: PropTypes.object,
   }
 
   _mouseDownClientYLast = 0
@@ -27,19 +30,23 @@ export default class DragSelect extends React.Component {
   _setPosition = event => {
     const delta = event.clientY - this._mouseDownClientYLast
     this._mouseDownClientYLast = event.clientY
-    console.log(delta)
     this.props.onSelect(delta)
   }
 
   onMouseMove = event => {
     event.preventDefault()
     event.stopPropagation()
-
     window.requestAnimationFrame(() => this._setPosition(event))
   }
 
   render() {
-    const { children } = this.props
-    return <div onMouseDown={this.handleMouseDown}>{children}</div>
+    const { renderProps, render } = this.props
+    return render({
+      ...renderProps,
+      onMouseDown: compose(
+        renderProps.onMouseDown || noop,
+        this.handleMouseDown,
+      ),
+    })
   }
 }

@@ -1,13 +1,12 @@
-import styles       from './index.scss'
-import cx           from 'classnames'
-import { observer } from 'mobx-react'
-import PropTypes    from 'prop-types'
-import React        from 'react'
+import styles           from './index.scss'
+import cx               from 'classnames'
+import { observer }     from 'mobx-react'
+import PropTypes        from 'prop-types'
+import React            from 'react'
 
-import Switch       from '../Switch'
-import ChannelMeter from './ChannelMeters'
-import PanKnob      from './PanKnob'
-import DragSelect   from 'components/DragSelect'
+import Switch           from '../Switch'
+import ChannelMeter     from './ChannelMeters'
+import DraggablePanKnob from './DraggablePanKnob'
 
 @observer
 export default class Channel extends React.Component {
@@ -30,12 +29,10 @@ export default class Channel extends React.Component {
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
-          <DragSelect
-            onSelect={this.setPanPosition}
+          <DraggablePanKnob
+            channel={channel}
             className={styles.control__item}
-          >
-            <PanKnob panPosition={channel.panPosition} />
-          </DragSelect>
+          />
           <Switch on className={styles.control__item}>
             {label}
           </Switch>
