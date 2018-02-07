@@ -1,11 +1,22 @@
 .meters {
+  position: relative;
   height: 100%;
   width: 100%;
-}
+  cursor: pointer;
 
-.meter {
-  width: 40%;
-}
-.meter + .meter {
-  margin-left: 20%;
+  .meter {
+    width: 40%;
+  }
+  .meter + .meter {
+    margin-left: 20%;
+  }
+
+  .arrow {
+    position: absolute;
+    top: 0;
+    right: -80%;
+    border-top: .5em solid transparent;
+    border-bottom: .5em solid transparent;
+    border-right: .8em solid var(--brand);
+  }
 }
