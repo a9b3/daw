@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react'
-import PropTypes    from 'prop-types'
-import React        from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import DragSelect   from 'components/DragSelect'
+import DragSelect from 'components/DragSelect'
 
-import PanKnob      from './PanKnob'
+import PanKnob from './PanKnob'
 
 @observer
 export default class DraggablePanKnob extends React.Component {
@@ -12,13 +12,13 @@ export default class DraggablePanKnob extends React.Component {
     channel: PropTypes.object.isRequired,
   }
 
-  setPanPosition = value => {
+  setPanPosition = delta => {
     const { channel } = this.props
-    const adjustedValue = channel.panPosition - value * 0.1 / 50
-    if (adjustedValue <= -1 || adjustedValue >= 1) {
+    const gain = channel.panPosition - delta * 0.2 / 50
+    if (gain <= -1 || gain >= 1) {
       return
     }
-    channel.setPanPosition(adjustedValue)
+    channel.setPanPosition(gain)
   }
 
   reset = () => {
