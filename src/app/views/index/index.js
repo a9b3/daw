@@ -35,6 +35,7 @@ export default class Index extends React.Component {
               style={{ width: 120, height: 320 }}
               label={`${i}`}
               channel={channel}
+              toggleMute={channel.toggleMute}
             />
           )
         })}

@@ -13,6 +13,7 @@ export default class Channel extends React.Component {
   static propTypes = {
     channel: PropTypes.object.isRequired,
     label: PropTypes.string,
+    toggleMute: PropTypes.func,
   }
 
   setPanPosition = value => {
@@ -25,7 +26,7 @@ export default class Channel extends React.Component {
   }
 
   render() {
-    const { channel, label, ...rest } = this.props
+    const { channel, label, toggleMute, ...rest } = this.props
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
@@ -36,13 +37,15 @@ export default class Channel extends React.Component {
           <Switch on className={styles.control__item}>
             {label}
           </Switch>
-          <Switch
-            on={channel.isMute}
-            className={styles.control__item}
-            onClick={channel.toggleMute}
-          >
-            M
-          </Switch>
+          {toggleMute && (
+            <Switch
+              on={channel.isMute}
+              className={styles.control__item}
+              onClick={toggleMute}
+            >
+              M
+            </Switch>
+          )}
           <Switch className={styles.control__item}>S</Switch>
           <div className={styles.end}>
             <Switch className={styles.control__item}>●</Switch>
