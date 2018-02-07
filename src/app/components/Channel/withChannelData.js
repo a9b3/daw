@@ -10,6 +10,13 @@ export default function withChannelData(WrappedComponent) {
     static displayName = `withChannelData(${WrappedComponent.displayName ||
       WrappedComponent.name})`
 
+    state = {
+      channelData: {
+        left: {},
+        right: {},
+      },
+    }
+
     static propTypes = {
       channel: PropTypes.object.isRequired,
     }
@@ -23,10 +30,7 @@ export default function withChannelData(WrappedComponent) {
     }
 
     handleUpdate = () => {
-      this.setState({})
-    }
-
-    render() {
+      const { channelData: prev } = this.state
       const { channel } = this.props
       const [left, right] = channel.analyser.getDecibel()
       const channelData = {
@@ -34,6 +38,20 @@ export default function withChannelData(WrappedComponent) {
         right: { main: right, peak: channel.rms.peaks[1] * 100 },
       }
 
+      if (
+        prev.left.main === channelData.left.main &&
+        prev.left.peak === channelData.left.peak &&
+        prev.right.main === channelData.right.main &&
+        prev.right.peak === channelData.right.peak
+      ) {
+        return
+      }
+
+      this.setState({ channelData })
+    }
+
+    render() {
+      const { channelData } = this.state
       return <WrappedComponent {...this.props} channelData={channelData} />
     }
   }
