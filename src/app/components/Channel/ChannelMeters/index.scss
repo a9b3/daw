@@ -1,0 +1,11 @@
+.meters {
+  height: 100%;
+  width: 100%;
+}
+
+.meter {
+  width: 40%;
+}
+.meter + .meter {
+  margin-left: 20%;
+}
