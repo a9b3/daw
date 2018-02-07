@@ -16,12 +16,21 @@ export default class Channel extends React.Component {
     label: PropTypes.string,
   }
 
+  setPanPosition = value => {
+    const { channel } = this.props
+    const adjustedValue = channel.panPosition - value * 0.1 / 50
+    if (adjustedValue <= -1 || adjustedValue >= 1) {
+      return
+    }
+    channel.setPanPosition(adjustedValue)
+  }
+
   render() {
     const { channel, label, ...rest } = this.props
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
-          <DragSelect onSelect={channel.setPanPosition}>
+          <DragSelect onSelect={this.setPanPosition}>
             <PanKnob
               panPosition={channel.panPosition}
               className={styles.control__item}
