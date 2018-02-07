@@ -30,11 +30,11 @@ export default class Channel extends React.Component {
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
-          <DragSelect onSelect={this.setPanPosition}>
-            <PanKnob
-              panPosition={channel.panPosition}
-              className={styles.control__item}
-            />
+          <DragSelect
+            onSelect={this.setPanPosition}
+            className={styles.control__item}
+          >
+            <PanKnob panPosition={channel.panPosition} />
           </DragSelect>
           <Switch on className={styles.control__item}>
             {label}

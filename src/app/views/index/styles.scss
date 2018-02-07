@@ -1,3 +1,7 @@
 .index {
+  background: var(--slate);
 
+  >* + * {
+    margin-left: 2px;
+  }
 }

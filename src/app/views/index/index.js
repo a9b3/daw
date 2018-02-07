@@ -27,12 +27,12 @@ export default class Index extends React.Component {
   render() {
     const { mixer } = this.props
     return (
-      <div className={styles.index}>
+      <div className={styles.index} style={{ display: 'flex' }}>
         {mixer.channels.map((channel, i) => {
           return (
             <Channel
               key={i}
-              style={{ width: 100, height: 320 }}
+              style={{ width: 120, height: 320 }}
               label={i}
               channel={channel}
             />
@@ -41,7 +41,7 @@ export default class Index extends React.Component {
 
         <Channel
           key={2}
-          style={{ width: 100, height: 320 }}
+          style={{ width: 120, height: 320, marginLeft: 'auto' }}
           label={'mtr'}
           channel={mixer.master}
         />
