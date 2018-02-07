@@ -12,11 +12,11 @@ import PanKnob      from './PanKnob'
 export default class Channel extends React.Component {
   static propTypes = {
     channel: PropTypes.object.isRequired,
-    channelIndex: PropTypes.number,
+    label: PropTypes.number,
   }
 
   render() {
-    const { channel, channelIndex, ...rest } = this.props
+    const { channel, label, ...rest } = this.props
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
@@ -25,7 +25,7 @@ export default class Channel extends React.Component {
             className={styles.control__item}
           />
           <Switch on className={styles.control__item}>
-            {channelIndex}
+            {label}
           </Switch>
           <Switch
             on={channel.isMute}
@@ -39,9 +39,7 @@ export default class Channel extends React.Component {
             <Switch className={styles.control__item}>●</Switch>
           </div>
         </section>
-        <section className={styles.meters}>
-          <ChannelMeter channel={channel} />
-        </section>
+        <ChannelMeter className={styles.meters} channel={channel} />
       </div>
     )
   }

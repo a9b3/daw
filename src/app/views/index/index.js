@@ -33,6 +33,7 @@ export default class Index extends React.Component {
             <Channel
               key={i}
               style={{ width: 100, height: 320 }}
+              label={i}
               channel={channel}
             />
           )
@@ -41,6 +42,7 @@ export default class Index extends React.Component {
         <Channel
           key={2}
           style={{ width: 100, height: 320 }}
+          label={'mtr'}
           channel={mixer.master}
         />
       </div>
