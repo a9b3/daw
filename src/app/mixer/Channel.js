@@ -1,13 +1,14 @@
-import { observable } from 'mobx'
+import { action, observable } from 'mobx'
 
-import Analyser       from './Analyser'
-import RMS            from './RMS'
-import audioContext   from './audioContext'
+import Analyser               from './Analyser'
+import RMS                    from './RMS'
+import audioContext           from './audioContext'
 
 export default class Channel {
   input = audioContext.createGain()
   @observable panPosition = 0
   @observable gain = 1
+  @observable isMute = false
   panner = audioContext.createPanner()
   output = audioContext.createGain()
   rms = new RMS()
@@ -26,6 +27,7 @@ export default class Channel {
    *
    * @param {number} value - between -1 and 1, 0 is center
    */
+  @action
   setPanPosition = value => {
     const x = value
     const y = 0
@@ -37,8 +39,19 @@ export default class Channel {
   /**
    * @param {Number} value - between 0 - 1
    */
+  @action
   setGain = value => {
     this.gain = value
-    return this.output.setGain(value)
+    this.output.gain.setTargetAtTime(this.gain, audioContext.currentTime, 0)
+  }
+
+  @action
+  toggleMute = () => {
+    this.isMute = !this.isMute
+    if (this.isMute) {
+      this.output.gain.setTargetAtTime(0, audioContext.currentTime, 0)
+    } else {
+      this.output.gain.setTargetAtTime(this.gain, audioContext.currentTime, 0)
+    }
   }
 }
