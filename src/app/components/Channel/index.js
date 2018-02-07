@@ -1,35 +1,37 @@
-import styles    from './index.scss'
-import cx        from 'classnames'
-import PropTypes from 'prop-types'
-import React     from 'react'
+import styles       from './index.scss'
+import cx           from 'classnames'
+import { observer } from 'mobx-react'
+import PropTypes    from 'prop-types'
+import React        from 'react'
 
-import Meter     from '../Meter'
-import Switch    from '../Switch'
-import PanKnob   from './PanKnob'
+import Switch       from '../Switch'
+import ChannelMeter from './ChannelMeters'
+import PanKnob      from './PanKnob'
 
+@observer
 export default class Channel extends React.Component {
   static propTypes = {
+    channel: PropTypes.object.isRequired,
     channelIndex: PropTypes.number,
-    panPosition: PropTypes.number,
-    meterData: PropTypes.object,
   }
 
   render() {
-    const {
-      channel,
-      meterData,
-      panPosition,
-      channelIndex,
-      ...rest
-    } = this.props
+    const { channel, channelIndex, ...rest } = this.props
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>
-          <PanKnob panPosition={panPosition} className={styles.control__item} />
+          <PanKnob
+            panPosition={channel.panPosition}
+            className={styles.control__item}
+          />
           <Switch on className={styles.control__item}>
             {channelIndex}
           </Switch>
-          <Switch on className={styles.control__item}>
+          <Switch
+            on={channel.isMute}
+            className={styles.control__item}
+            onClick={channel.toggleMute}
+          >
             M
           </Switch>
           <Switch className={styles.control__item}>S</Switch>
@@ -38,18 +40,7 @@ export default class Channel extends React.Component {
           </div>
         </section>
         <section className={styles.meters}>
-          <Meter
-            className={styles.meter}
-            peak={meterData.left.peak}
-            main={meterData.left.main}
-            secondary={50}
-          />
-          <Meter
-            className={styles.meter}
-            peak={meterData.right.peak}
-            main={meterData.right.main}
-            secondary={50}
-          />
+          <ChannelMeter channel={channel} />
         </section>
       </div>
     )

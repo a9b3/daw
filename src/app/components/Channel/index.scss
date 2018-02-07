@@ -31,12 +31,5 @@
 
   .meters {
     grid-area: meters;
-
-    .meter {
-      width: 40%;
-    }
-    .meter + .meter {
-      margin-left: 20%;
-    }
   }
 }
