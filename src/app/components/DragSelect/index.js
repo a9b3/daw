@@ -7,15 +7,13 @@ export default class DragSelect extends React.Component {
     onSelect: PropTypes.func,
   }
 
-  _mouseClickOffset = null
-  _selectorDOMRef = null
+  _mouseDownClientY = null
 
   handleMouseDown = event => {
     event.preventDefault()
     event.stopPropagation()
 
-    this._mouseClickOffset = event.clientY
-
+    this._mouseDownClientY = event.clientY
     document.addEventListener('mousemove', this.onMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   }
@@ -25,18 +23,16 @@ export default class DragSelect extends React.Component {
     document.removeEventListener('mouseup', this.handleMouseUp)
   }
 
-  _setPosition = (event, _mouseClickOffset) => {
-    const diff = event.clientY - _mouseClickOffset
-    this.props.onSelect(diff * 0.01)
+  _setPosition = event => {
+    const diff = (event.clientY - this._mouseDownClientY) * -1
+    this.props.onSelect(diff)
   }
 
   onMouseMove = event => {
     event.preventDefault()
     event.stopPropagation()
 
-    window.requestAnimationFrame(() => {
-      this._setPosition(event, this._mouseClickOffset)
-    })
+    window.requestAnimationFrame(() => this._setPosition(event))
   }
 
   render() {
