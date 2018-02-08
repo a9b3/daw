@@ -24,7 +24,7 @@ dev: deps
 		--app-index ./src/app/index.js
 
 story: deps
-	@NODE_PATH=./src:./src/app ./node_modules/@storybook/react/bin/index.js \
+	@BABEL_REACT=true NODE_PATH=./src:./src/app ./node_modules/@storybook/react/bin/index.js \
 		-p $(PORT) \
 		-c .storybook
 
