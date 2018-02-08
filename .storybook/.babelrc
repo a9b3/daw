@@ -1,0 +1,5 @@
+{
+  "presets": [
+    "jbs-fe/configs/babel-preset-jbs-fe.js"
+  ]
+}
