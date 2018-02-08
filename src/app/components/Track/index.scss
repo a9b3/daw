@@ -1,0 +1,28 @@
+.track {
+  --trackColor: var(--brand);
+
+  display: flex;
+  flex-direction: column;
+  background: #{"rgba(var(--lightgrayRGB), .3)"};
+
+  .header {
+    display: flex;
+    height: 2.5em;
+    align-items: center;
+    padding: 0 var(--spacing4);
+    background: var(--trackColor);
+    color: rgba(white, .7);
+  }
+
+  .clips {
+    flex-grow: 1;
+
+    li {
+      height: 40px;
+    }
+  }
+
+  .channel {
+    height: 300px;
+  }
+}
