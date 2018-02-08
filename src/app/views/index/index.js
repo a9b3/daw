@@ -1,5 +1,6 @@
 import styles               from './styles.scss'
 import { inject, observer } from 'mobx-react'
+import DevTools             from 'mobx-react-devtools'
 import PropTypes            from 'prop-types'
 import React                from 'react'
 
@@ -28,6 +29,7 @@ export default class Index extends React.Component {
     const { sequencer } = this.props
     return (
       <div className={styles.index}>
+        <DevTools />
         <GlobalControls />
         <div style={{ flexGrow: '1', display: 'flex' }}>
           {sequencer.tracks.map((track, i) => {

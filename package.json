@@ -9,6 +9,7 @@
     "eslint": "4.17.0",
     "eslint-config-esayemm": "2.0.19",
     "jbs-fe": "0.1.3",
+    "mobx-react-devtools": "4.2.15",
     "prettier": "1.10.2"
   },
   "scripts": {
