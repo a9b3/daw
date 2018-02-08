@@ -1,27 +1,32 @@
-import styles from './index.scss'
-import PropTypes from 'prop-types'
-import React from 'react'
+import styles                 from './index.scss'
+import cx                     from 'classnames'
+import PropTypes              from 'prop-types'
+import React                  from 'react'
 
-import HorizontalMeter from './HorizontalMeter'
+import ControlIcon, { TYPES } from './ControlIcon'
+import HorizontalMeter        from './HorizontalMeter'
 
-export default function Clip({ label }) {
+export default function Clip({ clip, ...rest }) {
   return (
-    <div className={styles.clip}>
-      <HorizontalMeter className={styles.meter} value={10} />
+    <div
+      {...rest}
+      className={cx(styles.clip, rest.className, {
+        [styles['clip--occupied']]: Boolean(clip),
+      })}
+    >
+      {clip && <HorizontalMeter className={styles.meter} value={10} />}
       <div className={styles.info}>
-        <svg
-          className={styles.info__icon}
-          height=".8em"
-          width=".8em"
-          viewBox="0 0 100 100"
-        >
-          <rect width="100%" height="100%" />
-        </svg>
-        <span className={styles.info__label}>{label}</span>
+        <ControlIcon
+          className={styles.icon}
+          type={cx({
+            [TYPES.stop]: true,
+          })}
+        />
+        {clip && clip.label}
       </div>
     </div>
   )
 }
 Clip.propTypes = {
-  label: PropTypes.string,
+  clip: PropTypes.object,
 }

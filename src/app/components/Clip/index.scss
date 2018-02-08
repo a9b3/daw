@@ -3,11 +3,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--slate);
-  color: rgba(white, .8);
 
   .meter {
-    height: .5em;
+    height: .4em;
   }
 
   .info {
@@ -16,13 +14,20 @@
     align-items: center;
     padding: 0 var(--spacing4);
 
-    &__icon {
+    .icon {
       margin-right: var(--spacing4);
-      fill: var(--white);
+      fill: var(--slate);
     }
+  }
 
-    &__label {
+  &--occupied {
+    background: var(--dark);
+    color: rgba(white, .8);
 
+    .info {
+      .icon {
+        fill: #{"rgba(var(--lightgrayRGB), .8)"};
+      }
     }
   }
 }
