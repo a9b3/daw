@@ -14,12 +14,14 @@ export default class Channel {
   rms = new RMS()
   analyser = new Analyser()
 
-  constructor({ outputSource }) {
+  constructor({ outputSource } = {}) {
     this.input.connect(this.panner)
     this.panner.connect(this.output)
-    this.output.connect(outputSource)
     this.output.connect(this.analyser.input)
     this.output.connect(this.rms.input)
+    if (outputSource) {
+      this.output.connect(outputSource)
+    }
   }
 
   /**
