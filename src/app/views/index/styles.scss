@@ -1,6 +1,8 @@
 .index {
   background: var(--slate);
-  height: 1000px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   >* + * {
     margin-left: 2px;

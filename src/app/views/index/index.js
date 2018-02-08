@@ -6,6 +6,7 @@ import React                from 'react'
 import { Sound }            from 'app/mixer'
 
 import Channel              from 'components/Channel'
+import GlobalControls       from 'components/GlobalControls'
 import Track                from 'components/Track'
 
 @inject('sequencer')
@@ -26,27 +27,30 @@ export default class Index extends React.Component {
   render() {
     const { sequencer } = this.props
     return (
-      <div className={styles.index} style={{ display: 'flex' }}>
-        {sequencer.tracks.map((track, i) => {
-          return (
-            <Track
-              track={track}
-              key={`${i}`}
-              style={{ width: 120 }}
-              label={`${i}`}
-              channel={track.channel}
-              toggleMute={track.channel.toggleMute}
-            />
-          )
-        })}
+      <div className={styles.index}>
+        <GlobalControls />
+        <div style={{ flexGrow: '1', display: 'flex' }}>
+          {sequencer.tracks.map((track, i) => {
+            return (
+              <Track
+                track={track}
+                key={`${i}`}
+                style={{ width: 120 }}
+                label={`${i}`}
+                channel={track.channel}
+                toggleMute={track.channel.toggleMute}
+              />
+            )
+          })}
 
-        <Track
-          key={`ok`}
-          style={{ width: 120, marginLeft: 'auto' }}
-          label={'mtr'}
-          channel={sequencer.master.channel}
-          track={sequencer.master}
-        />
+          <Track
+            key={`ok`}
+            style={{ width: 120, marginLeft: 'auto' }}
+            label={'mtr'}
+            channel={sequencer.master.channel}
+            track={sequencer.master}
+          />
+        </div>
       </div>
     )
   }
