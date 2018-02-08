@@ -1,5 +1,8 @@
 @import '~esayemm-styles/global';
+ @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 
 :global {
-
+  html {
+    font-family: 'Roboto', sans-serif;
+  }
 }
