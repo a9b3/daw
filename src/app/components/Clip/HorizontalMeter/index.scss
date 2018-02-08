@@ -1,0 +1,12 @@
+.horizontalMeter {
+  --horizontalMeterValueColor: var(--brandRGB);
+  --horizontalMeterBGColor: #{"rgba(var(--horizontalMeterValueColor), .3)"};
+
+  .background {
+    fill: var(--horizontalMeterBGColor)
+  }
+  .value {
+    fill: #{"rgb(var(--horizontalMeterValueColor))"};
+    transition: all .1s;
+  }
+}
