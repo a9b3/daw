@@ -6,7 +6,6 @@ import React                from 'react'
 
 import { Sound }            from 'app/mixer'
 
-import Channel              from 'components/Channel'
 import GlobalControls       from 'components/GlobalControls'
 import Track                from 'components/Track'
 
