@@ -6,43 +6,46 @@ import React                from 'react'
 import { Sound }            from 'app/mixer'
 
 import Channel              from 'components/Channel'
+import Track                from 'components/Track'
 
-@inject('mixer')
+@inject('sequencer')
 @observer
 export default class Index extends React.Component {
   static propTypes = {
-    mixer: PropTypes.object.isRequired,
+    sequencer: PropTypes.object.isRequired,
   }
 
   async componentDidMount() {
-    const { mixer } = this.props
+    const { sequencer } = this.props
     const sound = new Sound()
-    sound.output.connect(mixer.channels[0].input)
+    sound.output.connect(sequencer.tracks[0].channel.input)
     await sound.load(require('assets/song.mp3'))
     sound.play()
   }
 
   render() {
-    const { mixer } = this.props
+    const { sequencer } = this.props
     return (
       <div className={styles.index} style={{ display: 'flex' }}>
-        {mixer.channels.map((channel, i) => {
+        {sequencer.tracks.map((track, i) => {
           return (
-            <Channel
+            <Track
+              track={track}
               key={`${i}`}
-              style={{ width: 120, height: 320 }}
+              style={{ width: 120 }}
               label={`${i}`}
-              channel={channel}
-              toggleMute={channel.toggleMute}
+              channel={track.channel}
+              toggleMute={track.channel.toggleMute}
             />
           )
         })}
 
-        <Channel
+        <Track
           key={`ok`}
-          style={{ width: 120, height: 320, marginLeft: 'auto' }}
+          style={{ width: 120, marginLeft: 'auto' }}
           label={'mtr'}
-          channel={mixer.master}
+          channel={sequencer.master.channel}
+          track={sequencer.master}
         />
       </div>
     )
