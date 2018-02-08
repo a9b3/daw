@@ -1,10 +1,11 @@
-import styles                 from './index.scss'
-import cx                     from 'classnames'
-import PropTypes              from 'prop-types'
-import React                  from 'react'
+import styles from './index.scss'
+import cx from 'classnames'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import ControlIcon, { TYPES } from './ControlIcon'
-import HorizontalMeter        from './HorizontalMeter'
+import ControlIcon, { TYPES } from 'components/ControlIcon'
+
+import HorizontalMeter from './HorizontalMeter'
 
 export default function Clip({ clip, ...rest }) {
   return (
