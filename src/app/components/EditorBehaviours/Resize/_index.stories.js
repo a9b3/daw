@@ -6,22 +6,26 @@ import Resize        from './index.js'
 export default class ResizeExample extends React.Component {
   state = {
     width: 100,
+    height: 100,
   }
 
-  handleResize = delta => {
-    const { width } = this.state
-    this.setState({ width: width + delta.x })
+  handleDeltaChange = delta => {
+    const { width, height } = this.state
+    this.setState({ width: width + delta.x, height: height + delta.y })
   }
 
   render() {
-    const { width } = this.state
+    const { width, height } = this.state
     return (
       <Resize
-        resize={this.handleResize}
+        onDeltaChange={this.handleDeltaChange}
         render={({ getProps }) => (
-          <div style={{ width, border: '1px solid black' }}>
-            hi
-            <div {...getProps()}>DRAG THIS</div>
+          <div
+            style={{ cursor: 'move', width, height, border: '1px solid black' }}
+            {...getProps()}
+          >
+            {`${width}px ${height}px`}
+            <div>Drag to resize</div>
           </div>
         )}
       />
