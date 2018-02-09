@@ -4,26 +4,45 @@ import React                 from 'react'
 
 import List                  from './index.js'
 
-const renderRow = i => {
-  return (
-    <div
-      style={{
-        border: '1px solid black',
-        width: '10em',
-        height: `100px`,
-      }}
-    >
-      {i}
-    </div>
-  )
-}
-
 storiesOf('VirtualizedLayouts/List', module)
   .addDecorator(withKnobs)
-  .add('default', () => {
+  .add('default static row height', () => {
     return (
       <div style={{ width: '100%', height: '500px' }}>
-        <List renderRow={renderRow} total={number('total', 100000)} />
+        <List
+          renderRow={i => (
+            <div
+              style={{
+                border: '1px solid black',
+                width: '10em',
+                height: '100px',
+              }}
+            >
+              {i}
+            </div>
+          )}
+          total={number('total', 100000)}
+        />
+      </div>
+    )
+  })
+  .add('dynamic row height', () => {
+    return (
+      <div style={{ width: '100%', height: '500px' }}>
+        <List
+          renderRow={i => (
+            <div
+              style={{
+                border: '1px solid black',
+                width: '10em',
+                height: `${50 + Math.random() * 50}px`,
+              }}
+            >
+              {i}
+            </div>
+          )}
+          total={number('total', 100000)}
+        />
       </div>
     )
   })

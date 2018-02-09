@@ -13,23 +13,31 @@ export default class List extends React.PureComponent {
   }
 
   state = {
-    range: [0, 10],
+    range: [0, 0],
     spacers: {
       top: 0,
-      bottom: 1000,
+      bottom: 0,
     },
     averageRowHeight: 100,
   }
 
   componentDidMount() {
-    // hydrate state
     this._updateState()
+  }
+
+  componentDidUpdate() {
+    this._contentDOM.offsetHeight
   }
 
   /* --------------- DOM Refs --------------- */
   _viewBoxDOM = undefined
   _setViewBoxDOM = el => {
     this._viewBoxDOM = el
+  }
+
+  _contentDOM = undefined
+  _setContentDOM = el => {
+    this._contentDOM = el
   }
 
   /* --------------- Helpers --------------- */
@@ -107,6 +115,7 @@ export default class List extends React.PureComponent {
               position: 'absolute',
               top: range[0] * 100,
             }}
+            ref={this._setContentDOM}
           >
             {this._renderRange(range)}
           </div>
