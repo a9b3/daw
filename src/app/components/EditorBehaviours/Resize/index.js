@@ -1,12 +1,13 @@
-import { noop } from 'lodash'
+import { noop }    from 'lodash'
 import { compose } from 'lodash/fp'
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes   from 'prop-types'
+import React       from 'react'
 
 export default class Resize extends React.Component {
   static propTypes = {
     render: PropTypes.func,
-    onDeltaChange: PropTypes.func,
+    // ( delta: {x: number, y: number} ) => void
+    onResize: PropTypes.func,
   }
 
   _deltas = { x: 0, y: 0 }
@@ -23,8 +24,8 @@ export default class Resize extends React.Component {
     if (!this._isDragging) {
       return
     }
-    const { onDeltaChange } = this.props
-    onDeltaChange(this._calculateDeltas(event))
+    const { onResize } = this.props
+    onResize(this._calculateDeltas(event))
     this._deltas = { x: event.clientX, y: event.clientY }
   }
 

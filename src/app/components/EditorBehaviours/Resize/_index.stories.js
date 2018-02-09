@@ -9,7 +9,7 @@ export default class ResizeExample extends React.Component {
     height: 100,
   }
 
-  handleDeltaChange = delta => {
+  handleResize = delta => {
     const { width, height } = this.state
     this.setState({ width: width + delta.x, height: height + delta.y })
   }
@@ -18,7 +18,7 @@ export default class ResizeExample extends React.Component {
     const { width, height } = this.state
     return (
       <Resize
-        onDeltaChange={this.handleDeltaChange}
+        onResize={this.handleResize}
         render={({ getProps }) => (
           <div
             style={{ cursor: 'move', width, height, border: '1px solid black' }}
