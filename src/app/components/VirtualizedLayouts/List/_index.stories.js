@@ -6,7 +6,7 @@ import List                  from './index.js'
 
 storiesOf('VirtualizedLayouts/List', module)
   .addDecorator(withKnobs)
-  .add('default static row height', () => {
+  .add('static row height', () => {
     return (
       <div style={{ width: '100%', height: '500px' }}>
         <List
