@@ -3,7 +3,7 @@ import { compose } from 'lodash/fp'
 import PropTypes   from 'prop-types'
 import React       from 'react'
 
-export default class DragSelect extends React.Component {
+export default class DragSelect extends React.PureComponent {
   static propTypes = {
     onSelect: PropTypes.func,
     render: PropTypes.func,
