@@ -20,7 +20,7 @@ export default class Resize extends React.Component {
     }
   }
 
-  handleMouseMove = event => {
+  _handleMouseMove = event => {
     if (!this._isDragging) {
       return
     }
@@ -29,31 +29,21 @@ export default class Resize extends React.Component {
     this._deltas = { x: event.clientX, y: event.clientY }
   }
 
+  _handleMouseUp = () => {
+    this._isDragging = false
+    document.removeEventListener('mousemove', this._handleMouseMove)
+    document.removeEventListener('mouseup', this._handleMouseUp)
+  }
+
   handleMouseDown = event => {
-    this._isDragging = true
     this._deltas = { x: event.clientX, y: event.clientY }
+    this._isDragging = true
+    document.addEventListener('mousemove', this._handleMouseMove)
+    document.addEventListener('mouseup', this._handleMouseUp)
   }
 
-  handleMouseUp = () => {
-    this._isDragging = false
-  }
-
-  handleMouseOut = () => {
-    this._isDragging = false
-  }
-
-  getProps = ({
-    onMouseUp = noop,
-    onMouseMove = noop,
-    onMouseDown = noop,
-    onMouseOut = noop,
-  } = {}) => {
-    return {
-      onMouseDown: compose(onMouseDown, this.handleMouseDown),
-      onMouseMove: compose(onMouseMove, this.handleMouseMove),
-      onMouseUp: compose(onMouseUp, this.handleMouseUp),
-      onMouseOut: compose(onMouseOut, this.handleMouseOut),
-    }
+  getProps = ({ onMouseDown = noop, ...rest } = {}) => {
+    return { ...rest, onMouseDown: compose(onMouseDown, this.handleMouseDown) }
   }
 
   render() {
