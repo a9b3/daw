@@ -17,7 +17,7 @@ export default class Measure extends React.PureComponent {
 
   componentDidMount() {
     const { onMeasure } = this.props
-    onMeasure(this.getDimensions())
+    window.requestAnimationFrame(() => onMeasure(this.getDimensions()))
   }
 
   getDimensions = () => {

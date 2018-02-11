@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React     from 'react'
 
+import Measure   from '../Measure'
+
 export default class List extends React.PureComponent {
   static propTypes = {
     renderRow: PropTypes.func,
@@ -25,19 +27,10 @@ export default class List extends React.PureComponent {
     this._updateState()
   }
 
-  componentDidUpdate() {
-    this._contentDOM.offsetHeight
-  }
-
   /* --------------- DOM Refs --------------- */
   _viewBoxDOM = undefined
   _setViewBoxDOM = el => {
     this._viewBoxDOM = el
-  }
-
-  _contentDOM = undefined
-  _setContentDOM = el => {
-    this._contentDOM = el
   }
 
   /* --------------- Helpers --------------- */
@@ -86,6 +79,10 @@ export default class List extends React.PureComponent {
     this.setState({ range, spacers })
   }
 
+  _handleMeasure = value => {
+    console.log(value)
+  }
+
   handleScroll = event => {
     this._updateState(event.target.scrollTop)
   }
@@ -110,15 +107,16 @@ export default class List extends React.PureComponent {
             paddingBottom: spacers.bottom,
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              top: range[0] * 100,
-            }}
-            ref={this._setContentDOM}
-          >
-            {this._renderRange(range)}
-          </div>
+          <Measure show onMeasure={this._handleMeasure}>
+            <div
+              style={{
+                position: 'absolute',
+                top: range[0] * 100,
+              }}
+            >
+              {this._renderRange(range)}
+            </div>
+          </Measure>
         </div>
       </div>
     )
