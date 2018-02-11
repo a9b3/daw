@@ -15,7 +15,9 @@ export default class ScrollSyncManager extends React.Component {
     const { scrollHeight, scrollWidth, scrollTop, scrollLeft } = event.target
     const scrollLeftPercent = scrollLeft / scrollWidth
     const scrollTopPercent = scrollTop / scrollHeight
-    this.setState({ scrollTopPercent, scrollLeftPercent })
+    window.requestAnimationFrame(() => {
+      this.setState({ scrollTopPercent, scrollLeftPercent })
+    })
   }
 
   render() {
