@@ -1,0 +1,55 @@
+.sequencerLayout {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  background: var(--dark);
+  grid: "trackHeader sendHeader masterHeader" auto
+        "trackClips sendClips masterClips" 1fr
+        "trackChannel sendChannel masterChannel" auto
+        / 1fr auto auto;
+
+  .trackHeader {
+    grid-area: trackHeader;
+  }
+
+  .sendHeader {
+    grid-area: sendHeader;
+  }
+
+  .masterHeader {
+    grid-area: masterHeader;
+  }
+
+  .trackClips {
+    grid-area: trackClips;
+  }
+
+  .sendClips {
+    grid-area: sendClips;
+  }
+
+  .masterClips {
+    grid-area: masterClips;
+  }
+
+  .trackChannel {
+    grid-area: trackChannel;
+  }
+
+  .sendChannel {
+    grid-area: sendChannel;
+  }
+
+  .masterChannel {
+    grid-area: masterChannel;
+  }
+}
+
+.clip {
+  border-bottom: 1px solid #{"rgba(var(--slateRGB), .8)"};
+}
+
+.column {
+  border-right: 1px solid #{"rgba(var(--slateRGB), .8)"};
+  background: #{"rgba(var(--grayRGB), .7)"};
+}

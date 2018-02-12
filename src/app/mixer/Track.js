@@ -1,12 +1,16 @@
 import { action, observable } from 'mobx'
+import tinycolor from 'tinycolor2'
 
-import Channel                from './Channel'
-import Clip                   from './Clip'
+import Channel from './Channel'
+import Clip from './Clip'
 
 export default class Track {
   @observable label = ''
   @observable clips = {}
-  @observable colorRGB = '0, 0, 0'
+  @observable
+  colorRGB = Object.values(tinycolor.random().toRgb())
+    .slice(0, 3)
+    .join(', ')
   channel = new Channel()
 
   constructor({ label = '', outputSource, clips = {} } = {}) {

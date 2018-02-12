@@ -1,4 +1,4 @@
-import { Sequencer } from 'app/mixer'
+import { Sequencer }          from 'app/mixer'
 import { action, observable } from 'mobx'
 
 export default {
@@ -23,6 +23,11 @@ export default {
       },
       {},
       {},
+    ],
+    sends: [
+      {
+        label: 'Delay',
+      },
     ],
   }),
 }

@@ -1,0 +1,9 @@
+.trackHeader {
+  --trackHeaderRGB: var(--brand);
+
+  background: #{"rgb(var(--trackHeaderRGB))"};
+  color: white;
+  padding: 0 var(--spacing4);
+  display: flex;
+  align-items: center;
+}
