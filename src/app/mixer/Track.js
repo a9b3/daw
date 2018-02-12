@@ -1,8 +1,8 @@
 import { action, observable } from 'mobx'
-import tinycolor from 'tinycolor2'
+import tinycolor              from 'tinycolor2'
 
-import Channel from './Channel'
-import Clip from './Clip'
+import Channel                from './Channel'
+import Clip                   from './Clip'
 
 export default class Track {
   @observable label = ''

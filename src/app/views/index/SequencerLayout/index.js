@@ -1,11 +1,11 @@
-import styles      from './index.scss'
-import { noop }    from 'lodash'
-import PropTypes   from 'prop-types'
-import React       from 'react'
+import styles from './index.scss'
+import { noop } from 'lodash'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import Channel     from 'components/Channel'
-import Clip        from 'components/Clip'
-import Grid        from 'components/Layouts/Grid'
+import Channel from 'components/Channel'
+import Clip from 'components/Clip'
+import Grid from 'components/Layouts/Grid'
 
 import TrackHeader from './TrackHeader'
 
@@ -43,7 +43,7 @@ export default class SequencerLayout extends React.Component {
         style={{ width: 120, height: 300 }}
         key={row}
         channel={track.channel}
-        label={track.label}
+        label={col + 1}
         toggleMute={track.channel.toggleMute}
       />
     )
@@ -87,6 +87,7 @@ export default class SequencerLayout extends React.Component {
           rows={1}
           className={styles.sendHeader}
           columns={sequencer.sends.length}
+          columnClassName={styles.column}
           renderCell={(col, row) =>
             this.renderHeaderCell(col, row, sequencer.sends[col])
           }
@@ -94,6 +95,7 @@ export default class SequencerLayout extends React.Component {
         <Grid
           className={styles.sendClips}
           rows={10}
+          columnClassName={styles.column}
           columns={sequencer.sends.length}
           renderCell={(col, row) => {
             return this.renderClipCell(col, row, sequencer.sends[col])
@@ -103,6 +105,7 @@ export default class SequencerLayout extends React.Component {
           className={styles.sendChannel}
           rows={1}
           columns={sequencer.sends.length}
+          columnClassName={styles.column}
           renderCell={(col, row) => {
             return this.renderChannelCell(col, row, sequencer.sends[col])
           }}
@@ -112,6 +115,7 @@ export default class SequencerLayout extends React.Component {
           className={styles.masterHeader}
           rows={1}
           columns={1}
+          columnClassName={styles.column}
           renderCell={(col, row) => {
             return this.renderHeaderCell(col, row, sequencer.master)
           }}
@@ -120,6 +124,7 @@ export default class SequencerLayout extends React.Component {
           className={styles.masterClips}
           rows={10}
           columns={1}
+          columnClassName={styles.column}
           renderCell={(col, row) => {
             return this.renderClipCell(col, row, sequencer.master)
           }}
@@ -128,6 +133,7 @@ export default class SequencerLayout extends React.Component {
           className={styles.masterChannel}
           rows={1}
           columns={1}
+          columnClassName={styles.column}
           renderCell={(col, row) => {
             return this.renderChannelCell(col, row, sequencer.master)
           }}

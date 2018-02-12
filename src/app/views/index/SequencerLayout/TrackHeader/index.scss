@@ -1,9 +1,20 @@
 .trackHeader {
   --trackHeaderRGB: var(--brand);
 
-  background: #{"rgb(var(--trackHeaderRGB))"};
-  color: white;
+  position: relative;
+  background: #{"rgb(var(--darkRGB))"};
+  color: #{"rgba(var(--whiteRGB), .8)"};
   padding: 0 var(--spacing4);
   display: flex;
   align-items: center;
+
+  &:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+    content: '';
+    width: 100%;
+    height: .5em;
+    background: #{"rgb(var(--trackHeaderRGB))"};
+  }
 }

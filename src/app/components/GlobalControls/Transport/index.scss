@@ -3,15 +3,15 @@
 
   display: flex;
   align-items: center;
-  padding: var(--spacing5);
+  padding: var(--spacing5) var(--spacing3);
   color: var(--color);
   fill: var(--color);
 
   .icon {
-    height: .7em;
-    width: .7em;
+    height: .6em;
+    width: .6em;
   }
   .transport__item + .transport__item {
-    margin-left: var(--spacing3);
+    margin-left: var(--spacing4);
   }
 }

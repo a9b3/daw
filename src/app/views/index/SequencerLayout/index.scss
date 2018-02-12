@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
   display: grid;
-  background: var(--dark);
+  background: var(--slate);
   grid: "trackHeader sendHeader masterHeader" auto
         "trackClips sendClips masterClips" 1fr
         "trackChannel sendChannel masterChannel" auto
@@ -46,10 +46,10 @@
 }
 
 .clip {
-  border-bottom: 1px solid #{"rgba(var(--slateRGB), .8)"};
+  border-bottom: 1px solid #{"rgba(var(--slateRGB), .2)"};
 }
 
 .column {
   border-right: 1px solid #{"rgba(var(--slateRGB), .8)"};
-  background: #{"rgba(var(--grayRGB), .7)"};
+  background: #{"rgba(var(--lightgrayRGB), .25)"};
 }
