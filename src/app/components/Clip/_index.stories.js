@@ -1,8 +1,8 @@
 import { withKnobs, boolean, text } from '@storybook/addon-knobs'
-import { storiesOf }                from '@storybook/react'
-import React                        from 'react'
+import { storiesOf } from '@storybook/react'
+import React from 'react'
 
-import Clip                         from './index.js'
+import Clip from './index.js'
 
 storiesOf('Clip', module)
   .addDecorator(withKnobs)
@@ -15,6 +15,7 @@ storiesOf('Clip', module)
               label: text('clip.label', 'label'),
             }
           }
+          rgb={text('rgb', undefined)}
         />
       </div>
     )

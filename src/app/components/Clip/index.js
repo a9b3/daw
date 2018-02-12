@@ -1,13 +1,13 @@
-import styles from './index.scss'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+import styles                 from './index.scss'
+import cx                     from 'classnames'
+import PropTypes              from 'prop-types'
+import React                  from 'react'
 
 import ControlIcon, { TYPES } from 'components/ControlIcon'
 
-import HorizontalMeter from './HorizontalMeter'
+import HorizontalMeter        from './HorizontalMeter'
 
-export default function Clip({ clip, ...rest }) {
+export default function Clip({ clip, rgb, ...rest }) {
   return (
     <div
       {...rest}
@@ -15,7 +15,17 @@ export default function Clip({ clip, ...rest }) {
         [styles['clip--occupied']]: Boolean(clip),
       })}
     >
-      {clip && <HorizontalMeter className={styles.meter} value={10} />}
+      {clip && (
+        <HorizontalMeter
+          style={
+            rgb && {
+              ['--horizontalMeterValueColor']: rgb,
+            }
+          }
+          className={styles.meter}
+          value={10}
+        />
+      )}
       <div className={styles.info}>
         <ControlIcon
           className={styles.icon}
@@ -30,4 +40,5 @@ export default function Clip({ clip, ...rest }) {
 }
 Clip.propTypes = {
   clip: PropTypes.object,
+  rgb: PropTypes.string,
 }
