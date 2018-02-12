@@ -4,7 +4,7 @@ import React                 from 'react'
 
 import List                  from './index.js'
 
-storiesOf('VirtualizedLayouts/List', module)
+storiesOf('Layouts/List', module)
   .addDecorator(withKnobs)
   .add('static row height', () => {
     return (
