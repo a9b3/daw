@@ -5,6 +5,7 @@ import audioContext           from './audioContext'
 
 export default class Sequencer {
   @observable tracks = []
+  @observable sends = []
   master = new Track({ outputSource: audioContext.destination })
 
   constructor({ tracks = [] } = {}) {
