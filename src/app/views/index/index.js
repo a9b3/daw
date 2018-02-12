@@ -1,4 +1,4 @@
-import styles               from './styles.scss'
+import styles               from './index.scss'
 import { inject, observer } from 'mobx-react'
 import DevTools             from 'mobx-react-devtools'
 import PropTypes            from 'prop-types'
