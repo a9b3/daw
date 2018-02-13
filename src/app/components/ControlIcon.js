@@ -7,16 +7,21 @@ export const TYPES = {
   record: 'record',
 }
 
+function getIcon(type) {
+  switch (type) {
+    case TYPES.play:
+      return <polygon points="0,0 0,100 100,50" width="100%" height="100%" />
+    case TYPES.stop:
+      return <rect width="100%" height="100%" />
+    case TYPES.record:
+      return <circle cx="50" cy="50" r="50" width="100%" height="100%" />
+  }
+}
+
 export default function ControlIcon({ type, ...rest }) {
   return (
     <svg height=".6em" width=".6em" viewBox="0 0 100 100" {...rest}>
-      {type === TYPES.play && (
-        <polygon points="0,0 0,100 100,50" width="100%" height="100%" />
-      )}
-      {type === TYPES.stop && <rect width="100%" height="100%" />}
-      {type === TYPES.record && (
-        <circle cx="50" cy="50" r="50" width="100%" height="100%" />
-      )}
+      {getIcon(type)}
     </svg>
   )
 }
