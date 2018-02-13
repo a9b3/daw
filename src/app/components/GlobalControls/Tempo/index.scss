@@ -1,0 +1,17 @@
+.tempo {
+  --color: #{"rgba(var(--whiteRGB), .6)"};
+
+  display: flex;
+  align-items: center;
+  padding: var(--spacing5) var(--spacing3);
+  color: var(--color);
+  fill: var(--color);
+
+  .icon {
+    height: .6em;
+    width: .6em;
+  }
+  .tempo__item + .tempo__item {
+    margin-left: var(--spacing4);
+  }
+}

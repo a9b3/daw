@@ -1,7 +1,7 @@
-import styles from './index.scss'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+import styles                 from './index.scss'
+import cx                     from 'classnames'
+import PropTypes              from 'prop-types'
+import React                  from 'react'
 
 import ControlIcon, { TYPES } from 'components/ControlIcon'
 
