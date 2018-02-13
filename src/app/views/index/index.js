@@ -19,13 +19,15 @@ export default class Index extends React.Component {
   async componentDidMount() {
     const { sequencer } = this.props
     const sound = new Sound()
-    sound.output.connect(sequencer.tracks[0].channel.input)
-    await sound.load(require('assets/song.mp3'))
-    sound.play()
+    // sound.output.connect(sequencer.tracks[0].channel.input)
+    // await sound.load(require('assets/song.mp3'))
+    // sound.play()
   }
 
   render() {
     const { sequencer } = this.props
+
+    console.log(`hererendered`, sequencer)
     return (
       <div className={styles.index}>
         <DevTools />

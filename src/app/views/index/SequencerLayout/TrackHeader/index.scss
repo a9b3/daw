@@ -4,9 +4,10 @@
   position: relative;
   background: #{"rgb(var(--darkRGB))"};
   color: #{"rgba(var(--whiteRGB), .8)"};
-  padding: 0 var(--spacing4);
+  padding: var(--spacing5);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  text-shadow: 0 1px 1px #{"rgba(var(--blackRGB), .2)"};
 
   &:before {
   position: absolute;

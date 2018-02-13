@@ -5,8 +5,7 @@
   --buttonOnColor: var(--white);
 
   background: var(--buttonBgColor);
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(black, .2);
+  border-radius: 1px;
   color: white;
   cursor: pointer;
   display: block;
@@ -20,7 +19,6 @@
 
   &--on {
     background: var(--buttonOnBgColor);
-    box-shadow: inset 0 1px 2px rgba(black, .2);
     transform: translateY(1px);
     color: var(--buttonOnColor);
   }

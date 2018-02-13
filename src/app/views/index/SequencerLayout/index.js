@@ -19,7 +19,7 @@ export default class SequencerLayout extends React.Component {
     return (
       <TrackHeader
         key={row}
-        style={{ width: 120, height: 40 }}
+        style={{ width: 120, height: 50 }}
         label={track.label}
         rgb={track.colorRGB}
       />
