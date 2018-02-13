@@ -7,11 +7,11 @@ import Clip                   from './Clip'
 export default class Track {
   @observable label = ''
   clips = observable.map()
+  channel = new Channel()
   @observable
   colorRGB = Object.values(tinycolor.random().toRgb())
     .slice(0, 3)
     .join(', ')
-  channel = new Channel()
 
   constructor({ label = '', outputSource, clips = {} } = {}) {
     this.channel.output.connect(outputSource)
