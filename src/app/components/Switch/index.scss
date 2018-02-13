@@ -2,11 +2,11 @@
   --buttonPadding: .3em;
   --buttonBgColor: var(--slate);
   --buttonOnBgColor: var(--brand);
-  --buttonOnColor: var(--white);
+  --buttonOnColor: var(--buttonBgColor);
 
   background: var(--buttonBgColor);
   border-radius: 1px;
-  color: white;
+  color: rgba(white, .7);
   cursor: pointer;
   display: block;
   font-size: 1em;
