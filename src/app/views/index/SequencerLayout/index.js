@@ -1,13 +1,14 @@
-import styles from './index.scss'
-import { noop } from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import styles       from './index.scss'
+import cx           from 'classnames'
+import { Observer } from 'mobx-react'
+import PropTypes    from 'prop-types'
+import React        from 'react'
 
-import Channel from 'components/Channel'
-import Clip from 'components/Clip'
-import Grid from 'components/Layouts/Grid'
+import Channel      from 'components/Channel'
+import Clip         from 'components/Clip'
+import Grid         from 'components/Layouts/Grid'
 
-import TrackHeader from './TrackHeader'
+import TrackHeader  from './TrackHeader'
 
 export default class SequencerLayout extends React.Component {
   static propTypes = {
@@ -26,13 +27,16 @@ export default class SequencerLayout extends React.Component {
   }
 
   renderClipCell = (col, row, track) => {
+    const clip = track.clips.get(row)
+
     return (
       <Clip
         className={styles.clip}
         key={row}
         style={{ width: 120, height: 30 }}
-        clip={track.clips[row]}
+        clip={clip}
         rgb={track.colorRGB}
+        onDoubleClick={!clip ? () => track.insertClip(row) : undefined}
       />
     )
   }
@@ -40,7 +44,7 @@ export default class SequencerLayout extends React.Component {
   renderChannelCell = (col, row, track) => {
     return (
       <Channel
-        style={{ width: 120, height: 300 }}
+        style={{ width: 120, height: 260 }}
         key={row}
         channel={track.channel}
         label={col + 1}
@@ -50,10 +54,10 @@ export default class SequencerLayout extends React.Component {
   }
 
   render() {
-    const { sequencer } = this.props
+    const { sequencer, ...rest } = this.props
 
     return (
-      <div className={styles.sequencerLayout}>
+      <div {...rest} className={cx(styles.sequencerLayout, rest.className)}>
         {/* tracks */}
         <Grid
           rows={1}
@@ -69,9 +73,11 @@ export default class SequencerLayout extends React.Component {
           className={styles.trackClips}
           columnClassName={styles.column}
           columns={sequencer.tracks.length}
-          renderCell={(col, row) =>
-            this.renderClipCell(col, row, sequencer.tracks[col])
-          }
+          renderCell={(col, row) => (
+            <Observer key={row}>
+              {() => this.renderClipCell(col, row, sequencer.tracks[col])}
+            </Observer>
+          )}
         />
         <Grid
           rows={1}

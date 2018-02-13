@@ -47,6 +47,12 @@
 
 .clip {
   border-bottom: 1px solid #{"rgba(var(--slateRGB), .2)"};
+  transition: all .2;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .7;
+  }
 }
 
 .column {

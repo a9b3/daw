@@ -6,7 +6,7 @@ import Clip                   from './Clip'
 
 export default class Track {
   @observable label = ''
-  @observable clips = {}
+  clips = observable.map()
   @observable
   colorRGB = Object.values(tinycolor.random().toRgb())
     .slice(0, 3)
@@ -27,8 +27,8 @@ export default class Track {
   }
 
   @action
-  insertClip(key, args) {
+  insertClip = (key, args = {}) => {
     const clip = new Clip(args)
-    this.clips[key] = clip
+    this.clips.set(key, clip)
   }
 }
