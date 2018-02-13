@@ -1,4 +1,4 @@
-.tempo {
+.section {
   --color: #{"rgba(var(--whiteRGB), .6)"};
 
   display: flex;
@@ -11,7 +11,7 @@
     height: .6em;
     width: .6em;
   }
-  .tempo__item + .tempo__item {
+  .section__item + .section__item {
     margin-left: var(--spacing4);
   }
 }
