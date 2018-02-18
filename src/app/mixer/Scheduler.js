@@ -1,13 +1,13 @@
-import { observer }    from 'mobx'
+import { observable }  from 'mobx'
 
 import { setInterval } from 'utils/intervalWorker'
 
 import audioContext    from './audioContext'
 
 export default class Scheduler {
-  @observer bpm = 120
+  @observable bpm = 120
   // resolution, ex. 8 would be 8 ticks per beat meaning each tick is a 32nd note
-  @observer ticksPerBeat = 64
+  @observable ticksPerBeat = 64
 
   currentTick = 0
   nextTickTime = 0

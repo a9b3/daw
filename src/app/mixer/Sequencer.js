@@ -1,5 +1,7 @@
 import { action, observable } from 'mobx'
 
+import Metronome              from './Instrument/Metronome'
+import Scheduler              from './Scheduler'
 import Track                  from './Track'
 import audioContext           from './audioContext'
 
@@ -10,6 +12,8 @@ export default class Sequencer {
     outputSource: audioContext.destination,
     label: 'master',
   })
+  scheduler = new Scheduler()
+  metronome = new Metronome()
 
   constructor({ tracks = [], sends = [] } = {}) {
     tracks.forEach(track => {
@@ -19,6 +23,7 @@ export default class Sequencer {
     sends.forEach(send => {
       this.addSend(send)
     })
+    this.scheduler.addHandler(this.metronome.handler)
   }
 
   @action
