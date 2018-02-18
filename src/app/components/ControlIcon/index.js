@@ -1,3 +1,5 @@
+import styles    from './index.scss'
+import cx        from 'classnames'
 import PropTypes from 'prop-types'
 import React     from 'react'
 
@@ -20,7 +22,13 @@ function getIcon(type) {
 
 export default function ControlIcon({ type, ...rest }) {
   return (
-    <svg height=".6em" width=".6em" viewBox="0 0 100 100" {...rest}>
+    <svg
+      height=".6em"
+      width=".6em"
+      viewBox="0 0 100 100"
+      {...rest}
+      className={cx(styles.controlIcon, rest.className)}
+    >
       {getIcon(type)}
     </svg>
   )

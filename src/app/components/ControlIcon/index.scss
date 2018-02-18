@@ -1,0 +1,8 @@
+.controlIcon {
+  cursor: pointer;
+  transition: all .2s;
+
+  &:hover {
+    opacity: .8;
+  }
+}
