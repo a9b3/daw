@@ -4,12 +4,20 @@ import PropTypes              from 'prop-types'
 import React                  from 'react'
 
 import ControlIcon, { TYPES } from 'components/ControlIcon'
+import DragSelect             from 'components/DragSelect'
 
-export default function Tempo({ tempo }) {
+export default function Tempo({ bpm, setBPM }) {
   return (
     <section className={styles.section}>
       <div className={styles.section__item}>TAP</div>
-      <div className={styles.section__item}>{tempo.toFixed(2)}</div>
+      <DragSelect
+        onSelect={delta => setBPM(bpm + delta * -1)}
+        render={props => (
+          <div {...props} className={styles.section__item}>
+            {bpm.toFixed(2)}
+          </div>
+        )}
+      />
       <ControlIcon
         className={cx(styles.icon, styles.transport__item)}
         type={TYPES.metronome}
@@ -18,5 +26,6 @@ export default function Tempo({ tempo }) {
   )
 }
 Tempo.propTypes = {
-  tempo: PropTypes.number,
+  bpm: PropTypes.number,
+  setBPM: PropTypes.func,
 }
