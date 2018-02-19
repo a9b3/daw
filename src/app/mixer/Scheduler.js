@@ -1,14 +1,16 @@
-import { observable }  from 'mobx'
+import { noop }               from 'lodash'
+import { action, observable } from 'mobx'
 
-import { setInterval } from 'utils/intervalWorker'
+import { setInterval }        from 'utils/intervalWorker'
 
-import audioContext    from './audioContext'
+import audioContext           from './audioContext'
 
 export default class Scheduler {
-  @observable bpm = 120
+  getBPM = noop
   // resolution, ex. 8 would be 8 ticks per beat meaning each tick is a 32nd note
-  @observable ticksPerBeat = 64
+  @observable ticksPerWholeNote = 64
 
+  @observable isPlaying = false
   currentTick = 0
   nextTickTime = 0
   // in seconds
@@ -21,11 +23,12 @@ export default class Scheduler {
 
   _handlers = []
 
-  constructor({ bpm = 120 } = {}) {
-    this.bpm = bpm
+  constructor({ getBPM, handlers = [] } = {}) {
+    this.getBPM = getBPM
+    handlers.forEach(this.addHandler)
   }
 
-  addHandler(handler) {
+  addHandler = handler => {
     if (this._handlers.includes(handler)) {
       return
     }
@@ -45,29 +48,31 @@ export default class Scheduler {
       const handlerArg = {
         currentTick: this.currentTick,
         nextTickTime: this.nextTickTime,
-        ticksPerBeat: this.ticksPerBeat,
+        ticksPerWholeNote: this.ticksPerWholeNote,
       }
       this._handlers.forEach(handler => handler(handlerArg))
       // advance tick
-      const secondsPerBeat = 60 / this.bpm
-      this.nextTickTime += 1 / this.ticksPerBeat * secondsPerBeat
+      const secondsPerWholeNote = 60 / this.getBPM()
+      this.nextTickTime += 1 / this.ticksPerWholeNote * secondsPerWholeNote
       this.currentTick++
     }
   }
 
-  start() {
-    if (this._cancelInterval) {
-      return
-    }
+  @action
+  start = async () => {
+    this.stop()
     this._currentTick = 0
     this.nextTickTime = audioContext.currentTime
-    this._cancelInterval = setInterval(this._schedule, this.lookAhead)
+    this._cancelInterval = await setInterval(this._schedule, this.lookAhead)
+    this.isPlaying = true
   }
 
-  stop() {
+  @action
+  stop = () => {
     if (this._cancelInterval) {
       this._cancelInterval()
       this._cancelInterval = undefined
+      this.isPlaying = false
     }
   }
 }

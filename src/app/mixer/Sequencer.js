@@ -2,6 +2,7 @@ import { action, observable } from 'mobx'
 
 import Metronome              from './Instrument/Metronome'
 import Scheduler              from './Scheduler'
+import Signature              from './Signature'
 import Track                  from './Track'
 import audioContext           from './audioContext'
 
@@ -12,18 +13,25 @@ export default class Sequencer {
     outputSource: audioContext.destination,
     label: 'master',
   })
-  scheduler = new Scheduler()
+
+  signature = new Signature({
+    bpm: 120,
+    beatsPerBar: 4,
+    beatType: 4,
+  })
   metronome = new Metronome()
+  scheduler = new Scheduler({
+    handlers: [this.metronome.handler],
+    getBPM: () => this.signature.bpm,
+  })
 
   constructor({ tracks = [], sends = [] } = {}) {
     tracks.forEach(track => {
       this.addTrack(track)
     })
-
     sends.forEach(send => {
       this.addSend(send)
     })
-    this.scheduler.addHandler(this.metronome.handler)
   }
 
   @action
