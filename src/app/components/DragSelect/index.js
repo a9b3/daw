@@ -40,7 +40,7 @@ export default class DragSelect extends React.PureComponent {
   }
 
   render() {
-    const { renderProps, render } = this.props
+    const { renderProps = {}, render } = this.props
     return render({
       ...renderProps,
       onMouseDown: compose(
