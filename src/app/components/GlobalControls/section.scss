@@ -8,10 +8,14 @@
   fill: var(--color);
 
   .icon {
-    height: .6em;
-    width: .6em;
+    height: .8em;
+    width: .8em;
+
+    &--active {
+      fill: var(--brand);
+    }
   }
   .section__item + .section__item {
-    margin-left: var(--spacing4);
+    margin-left: var(--spacing3);
   }
 }

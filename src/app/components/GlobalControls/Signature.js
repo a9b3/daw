@@ -1,12 +1,18 @@
-import styles from './section.scss'
-import React  from 'react'
+import styles    from './section.scss'
+import cx        from 'classnames'
+import PropTypes from 'prop-types'
+import React     from 'react'
 
-export default function Signature() {
+export default function Signature({ beatsPerBar, beatType, ...rest }) {
   return (
-    <section className={styles.section}>
-      <div className={styles.section__item}>4/4</div>
-      <div className={styles.section__item}>1 BAR</div>
+    <section {...rest} className={cx(styles.section, rest.className)}>
+      <div className={styles.section__item}>
+        {beatsPerBar}/{beatType}
+      </div>
     </section>
   )
 }
-Signature.propTypes = {}
+Signature.propTypes = {
+  beatsPerBar: PropTypes.number,
+  beatType: PropTypes.number,
+}
