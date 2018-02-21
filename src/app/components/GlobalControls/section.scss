@@ -6,6 +6,11 @@
   padding: var(--spacing5) var(--spacing3);
   color: var(--color);
   fill: var(--color);
+}
+.section__item + .section__item {
+  margin-left: var(--spacing3);
+}
+
 
   .icon {
     height: .8em;
@@ -15,7 +20,3 @@
       fill: var(--brand);
     }
   }
-  .section__item + .section__item {
-    margin-left: var(--spacing3);
-  }
-}

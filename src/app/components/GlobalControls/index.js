@@ -5,20 +5,32 @@ import React                from 'react'
 
 import Sequencer            from 'mixer/Sequencer'
 
-import Signature            from './Signature'
-import Tempo                from './Tempo'
+import BPM                  from './BPM'
+import CurrentPosition      from './CurrentPosition'
 import Transport            from './Transport'
 
 function GlobalControls({ sequencer }) {
   return (
     <header className={styles.header}>
-      <Tempo
-        bpm={sequencer.signature.bpm}
-        setBPM={sequencer.signature.setBPM}
-      />
-      <Signature
-        beatsPerBar={sequencer.signature.beatsPerBar}
-        beatType={sequencer.signature.beatType}
+      <section className={styles.section}>
+        <BPM
+          bpm={sequencer.signature.bpm}
+          setBPM={sequencer.signature.setBPM}
+        />
+      </section>
+      <div className={styles.section}>
+        {sequencer.signature.beatsPerBar}/{sequencer.signature.beatType}
+      </div>
+      <CurrentPosition
+        scheduler={sequencer.scheduler}
+        signature={sequencer.signature}
+        render={({ currentBar, currentBeatType, currentBeatsPerBar }) => {
+          return (
+            <div>
+              {currentBar} . {currentBeatsPerBar} . {currentBeatType}
+            </div>
+          )
+        }}
       />
       <Transport
         isPlaying={sequencer.scheduler.isPlaying}

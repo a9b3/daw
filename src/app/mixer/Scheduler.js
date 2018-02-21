@@ -61,7 +61,6 @@ export default class Scheduler {
   @action
   start = async () => {
     this.stop()
-    this._currentTick = 0
     this.nextTickTime = audioContext.currentTime
     this._cancelInterval = await setInterval(this._schedule, this.lookAhead)
     this.isPlaying = true
@@ -70,6 +69,8 @@ export default class Scheduler {
   @action
   stop = () => {
     if (this._cancelInterval) {
+      console.log(`here`)
+      this.currentTick = 0
       this._cancelInterval()
       this._cancelInterval = undefined
       this.isPlaying = false

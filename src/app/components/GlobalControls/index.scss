@@ -1,10 +1,16 @@
 .header {
   display: flex;
   flex-direction: row;
+  align-items: center;
   background: var(--dark);
   padding: var(--spacing4) var(--spacing1);
+  color: #{"rgba(var(--whiteRGB), .8)"};
 
   >* + * {
     margin-left: var(--spacing1);
   }
+}
+
+.section {
+  padding: 0 var(--spacing3);
 }

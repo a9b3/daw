@@ -14,8 +14,7 @@ export default function Transport({
   ...rest
 }) {
   return (
-    <section {...rest} className={cx(styles.section, rest.className)}>
-      <div className={styles.section__item}>{`3 . 12 . 1`}</div>
+    <React.Fragment>
       <ControlIcon
         className={cx(styles.icon, styles.section__item, {
           [styles['icon--active']]: isPlaying,
@@ -35,7 +34,7 @@ export default function Transport({
         type={TYPES.record}
         onClick={onRecord}
       />
-    </section>
+    </React.Fragment>
   )
 }
 Transport.propTypes = {
