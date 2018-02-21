@@ -18,20 +18,22 @@ function GlobalControls({ sequencer }) {
           setBPM={sequencer.signature.setBPM}
         />
       </section>
-      <div className={styles.section}>
+      <section className={styles.section}>
         {sequencer.signature.beatsPerBar}/{sequencer.signature.beatType}
-      </div>
-      <CurrentPosition
-        scheduler={sequencer.scheduler}
-        signature={sequencer.signature}
-        render={({ currentBar, currentBeatType, currentBeatsPerBar }) => {
-          return (
-            <div className={styles.section}>
-              {currentBar} . {currentBeatsPerBar} . {currentBeatType}
-            </div>
-          )
-        }}
-      />
+      </section>
+      <section className={styles.section}>
+        <CurrentPosition
+          scheduler={sequencer.scheduler}
+          signature={sequencer.signature}
+          render={({ currentBar, currentBeatType, currentBeatsPerBar }) => {
+            return (
+              <div>
+                {currentBar} . {currentBeatsPerBar} . {currentBeatType}
+              </div>
+            )
+          }}
+        />
+      </section>
       <section className={styles.section}>
         <Transport
           isPlaying={sequencer.scheduler.isPlaying}
