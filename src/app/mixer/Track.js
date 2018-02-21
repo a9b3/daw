@@ -4,7 +4,13 @@ import tinycolor              from 'tinycolor2'
 import Channel                from './Channel'
 import Clip                   from './Clip'
 
+const TYPES = {
+  midi: 'midi',
+  audio: 'audio',
+}
+
 export default class Track {
+  type = undefined
   @observable label = ''
   clips = observable.map()
   channel = new Channel()
@@ -13,7 +19,13 @@ export default class Track {
     .slice(0, 3)
     .join(', ')
 
-  constructor({ label = '', outputSource, clips = {} } = {}) {
+  constructor({
+    type = TYPES.midi,
+    label = '',
+    outputSource,
+    clips = {},
+  } = {}) {
+    this.type = type
     this.channel.output.connect(outputSource)
     this.setLabel(label)
     Object.entries(clips).forEach(([key, clip]) => {
