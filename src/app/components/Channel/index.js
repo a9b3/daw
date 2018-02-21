@@ -27,6 +27,7 @@ export default class Channel extends React.Component {
 
   render() {
     const { channel, label, toggleMute, ...rest } = this.props
+
     return (
       <div {...rest} className={cx(styles.channel, rest.className)}>
         <section className={styles.control}>

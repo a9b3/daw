@@ -19,7 +19,7 @@ export default class SequencerLayout extends React.Component {
     return (
       <TrackHeader
         key={row}
-        style={{ width: 120, height: 50 }}
+        style={{ width: 130, height: 50 }}
         label={track.label}
         rgb={track.colorRGB}
       />
@@ -33,7 +33,7 @@ export default class SequencerLayout extends React.Component {
       <Clip
         className={styles.clip}
         key={row}
-        style={{ width: 120, height: 30 }}
+        style={{ width: 130, height: 30 }}
         clip={clip}
         rgb={track.colorRGB}
         onDoubleClick={!clip ? () => track.insertClip(row) : undefined}
@@ -44,7 +44,7 @@ export default class SequencerLayout extends React.Component {
   renderChannelCell = (col, row, track) => {
     return (
       <Channel
-        style={{ width: 120, height: 260 }}
+        style={{ width: 130, height: 280 }}
         key={row}
         channel={track.channel}
         label={col + 1}
