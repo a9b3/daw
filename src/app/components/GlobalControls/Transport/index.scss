@@ -1,0 +1,15 @@
+.icon {
+  --color: #{"rgba(var(--whiteRGB), .6)"};
+
+  background: black;
+  fill: var(--color);
+  height: .8em;
+  width: .8em;
+
+  &--active {
+    fill: var(--brand);
+  }
+}
+.icon + .icon {
+  margin-left: var(--spacing3);
+}

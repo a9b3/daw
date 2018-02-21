@@ -5,26 +5,40 @@ import React                from 'react'
 
 import Sequencer            from 'mixer/Sequencer'
 
-import Signature            from './Signature'
-import Tempo                from './Tempo'
+import BPM                  from './BPM'
+import CurrentPosition      from './CurrentPosition'
 import Transport            from './Transport'
 
 function GlobalControls({ sequencer }) {
   return (
     <header className={styles.header}>
-      <Tempo
-        bpm={sequencer.signature.bpm}
-        setBPM={sequencer.signature.setBPM}
+      <section className={styles.section}>
+        <BPM
+          bpm={sequencer.signature.bpm}
+          setBPM={sequencer.signature.setBPM}
+        />
+      </section>
+      <div className={styles.section}>
+        {sequencer.signature.beatsPerBar}/{sequencer.signature.beatType}
+      </div>
+      <CurrentPosition
+        scheduler={sequencer.scheduler}
+        signature={sequencer.signature}
+        render={({ currentBar, currentBeatType, currentBeatsPerBar }) => {
+          return (
+            <div className={styles.section}>
+              {currentBar} . {currentBeatsPerBar} . {currentBeatType}
+            </div>
+          )
+        }}
       />
-      <Signature
-        beatsPerBar={sequencer.signature.beatsPerBar}
-        beatType={sequencer.signature.beatType}
-      />
-      <Transport
-        isPlaying={sequencer.scheduler.isPlaying}
-        onPlay={sequencer.scheduler.start}
-        onStop={sequencer.scheduler.stop}
-      />
+      <section className={styles.section}>
+        <Transport
+          isPlaying={sequencer.scheduler.isPlaying}
+          onPlay={sequencer.scheduler.start}
+          onStop={sequencer.scheduler.stop}
+        />
+      </section>
     </header>
   )
 }
