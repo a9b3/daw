@@ -2,7 +2,8 @@ import { action, observable } from 'mobx'
 import tinycolor              from 'tinycolor2'
 
 import Channel                from './Channel'
-import Clip                   from './Clip'
+import AudioClip              from './Clip/AudioClip'
+import MidiClip               from './Clip/MidiClip'
 
 const TYPES = {
   midi: 'midi',
@@ -12,9 +13,9 @@ const TYPES = {
 function getClipType(type) {
   switch (type) {
     case TYPES.midi:
-      return Clip
+      return MidiClip
     case TYPES.audio:
-      return Clip
+      return AudioClip
   }
 }
 
@@ -49,7 +50,7 @@ export default class Track {
 
   @action
   insertClip = (key, args = {}) => {
-    const clip = new getClipType(this.type)(args)
+    const clip = new (getClipType(this.type))(args)
     this.clips.set(key, clip)
   }
 }
