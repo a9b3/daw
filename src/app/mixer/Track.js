@@ -9,6 +9,15 @@ const TYPES = {
   audio: 'audio',
 }
 
+function getClipType(type) {
+  switch (type) {
+    case TYPES.midi:
+      return Clip
+    case TYPES.audio:
+      return Clip
+  }
+}
+
 export default class Track {
   type = undefined
   @observable label = ''
@@ -40,7 +49,7 @@ export default class Track {
 
   @action
   insertClip = (key, args = {}) => {
-    const clip = new Clip(args)
+    const clip = new getClipType(this.type)(args)
     this.clips.set(key, clip)
   }
 }
