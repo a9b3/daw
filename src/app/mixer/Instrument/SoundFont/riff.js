@@ -543,7 +543,7 @@ function createNoteInfo({ sampleHeaders, generator, preset }) {
         get(generator, 'endloopAddrsOffset.amount', 0),
       volAttack: Math.pow(
         2,
-        get(generator, 'attackVolEnv.amount', -120000) / 1200,
+        get(generator, 'attackVolEnv.amount', -12000) / 1200,
       ),
       volDecay: Math.pow(
         2,
