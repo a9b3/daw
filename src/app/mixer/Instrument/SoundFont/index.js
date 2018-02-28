@@ -1,10 +1,9 @@
-import { action, observable }                       from 'mobx'
+import { action, observable, computed }             from 'mobx'
 
 import { URLTOArrayBuffer, fileToArrayBuffer }      from 'mixer/utils'
 
 import { parseSoundFontFile, createAllInstruments } from './riff'
 
-import Sound                                        from '../../Sound'
 import audioContext                                 from '../../audioContext'
 
 export default class SoundFont {
@@ -16,14 +15,34 @@ export default class SoundFont {
   @observable loading = false
   @observable selectedInstrumentIndex = undefined
 
+  @computed
+  get selectedInstrument() {
+    const bank = this.instruments[0]
+    const instrument = bank[this.selectedInstrumentIndex]
+    return instrument
+  }
+
   /* ---------- Instrument API ---------- */
 
   noteOn = ({ note, velocity = 1 } = {}) => {
     // array<array<{sample, ...}>>
-    const bank = this.instruments[0]
-    const instrument = bank[this.selectedInstrumentIndex]
+    const instrument = this.selectedInstrument
     const instrumentKey = instrument[note]
 
+    if (this.activeNotes[note]) {
+      return
+    }
+
+    // these will all be connected at the end
+    const noteNodes = {
+      bufferSource: audioContext.createBufferSource(),
+      filter: audioContext.createBiquadFilter(),
+      gain: audioContext.createGain(),
+    }
+    this.activeNotes[note] = noteNodes
+    const now = audioContext.currentTime
+
+    // sample
     let sample = instrumentKey.sample
     sample = sample.subarray(0, sample.length + instrumentKey.end)
     const buffer = audioContext.createBuffer(
@@ -34,20 +53,15 @@ export default class SoundFont {
     buffer.getChannelData(0).set(sample)
 
     // buffer source
-    const bufferSource = audioContext.createBufferSource()
-    bufferSource.buffer = buffer
-    bufferSource.loop = false
+    noteNodes.bufferSource.buffer = buffer
+    bufferSource.loop = true
     bufferSource.loopStart = instrumentKey.loopStart / instrumentKey.sampleRate
     bufferSource.loopEnd = instrumentKey.loopEnd / instrumentKey.sampleRate
     // TODO update pitch bend
 
-    const now = audioContext.currentTime
-    const output = audioContext.createGain()
-
     // filter
-    const filter = audioContext.createBiquadFilter()
-    filter.type = 'lowpass'
-    filter.Q.setValueAtTime(
+    noteNodes.filter.type = 'lowpass'
+    noteNodes.filter.Q.setValueAtTime(
       instrumentKey.initialFilterQ * Math.pow(10, 200),
       now,
     )
@@ -57,35 +71,61 @@ export default class SoundFont {
     )
     const sustainFreq =
       baseFreq + (peekFreq - baseFreq) * (1 - instrumentKey.modSustain)
-    filter.frequency.setValueAtTime(baseFreq, now)
-    filter.frequency.linearRampToValueAtTime(
+    noteNodes.filter.frequency.setValueAtTime(baseFreq, now)
+    noteNodes.filter.frequency.linearRampToValueAtTime(
       peekFreq,
       now + instrumentKey.modAttack,
     )
-    filter.frequency.linearRampToValueAtTime(
+    noteNodes.filter.frequency.linearRampToValueAtTime(
       sustainFreq,
       now + instrumentKey.modAttack + instrumentKey.modDecay,
     )
 
     // volume
     const volume = velocity / 127
-    output.gain.setValueAtTime(0, now)
-    output.gain.linearRampToValueAtTime(
+    noteNodes.gain.gain.setValueAtTime(0, now)
+    noteNodes.gain.gain.linearRampToValueAtTime(
       volume * (volume / 127),
       now + instrumentKey.volAttack,
     )
-    output.gain.linearRampToValueAtTime(
+    noteNodes.gain.gain.linearRampToValueAtTime(
       volume * (1 - instrumentKey.volSustain),
       now + instrumentKey.volDecay,
     )
 
-    bufferSource.connect(filter)
-    filter.connect(output)
-    output.connect(audioContext.destination)
-    bufferSource.start(0, instrumentKey.start / instrumentKey.sampleRate)
+    // connect all nodes
+    noteNodes.bufferSource.connect(noteNodes.filter)
+    noteNodes.filter.connect(noteNodes.gain)
+    noteNodes.gain.connect(audioContext.destination)
+
+    noteNodes.bufferSource.start(
+      0,
+      instrumentKey.start / instrumentKey.sampleRate,
+    )
   }
 
-  nodeOff = ({ note, velocity, duration }) => {}
+  noteOff = ({ note }) => {
+    if (!this.activeNotes[note]) {
+      return
+    }
+    const instrument = this.selectedInstrument
+    const instrumentKey = instrument[note]
+
+    const now = audioContext.currentTime
+    const noteNodes = this.activeNotes[note]
+    noteNodes.gain.gain.cancelScheduledValues(0)
+    noteNodes.gain.gain.linearRampToValueAtTime(
+      0,
+      now + instrumentKey.volRelease,
+    )
+
+    noteNodes.bufferSource.loop = false
+    noteNodes.bufferSource.stop(now + instrumentKey.volRelease)
+
+    noteNodes.bufferSource.disconnect(0)
+    noteNodes.filter.disconnect(0)
+    noteNodes.gain.disconnect(0)
+  }
 
   /* ---------- SoundFont API ---------- */
 
