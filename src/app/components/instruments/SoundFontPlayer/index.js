@@ -19,7 +19,7 @@ export default class SoundFontPlayer extends React.Component {
   handleInstrument = event => {
     const { soundFont } = this.props
     soundFont.selectInstrumentIndex(event.target.value)
-    soundFont.play({ note: 43 })
+    soundFont.noteOn({ note: 43, velocity: 0.1 })
   }
 
   render() {
