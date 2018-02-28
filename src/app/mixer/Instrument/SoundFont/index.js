@@ -18,13 +18,11 @@ export default class SoundFont {
 
   /* ---------- Instrument API ---------- */
 
-  play = ({ note, velocity, duration } = {}) => {
+  noteOn = ({ note, velocity = 1 } = {}) => {
     // array<array<{sample, ...}>>
     const bank = this.instruments[0]
     const instrument = bank[this.selectedInstrumentIndex]
     const instrumentKey = instrument[note]
-
-    console.log(instrumentKey)
 
     let sample = instrumentKey.sample
     sample = sample.subarray(0, sample.length + instrumentKey.end)
@@ -43,14 +41,34 @@ export default class SoundFont {
     bufferSource.loopEnd = instrumentKey.loopEnd / instrumentKey.sampleRate
     // TODO update pitch bend
 
+    const now = audioContext.currentTime
     const output = audioContext.createGain()
 
+    // filter
     const filter = audioContext.createBiquadFilter()
-    // filter.type = filter.LOWPASS
+    filter.type = 'lowpass'
+    filter.Q.setValueAtTime(
+      instrumentKey.initialFilterQ * Math.pow(10, 200),
+      now,
+    )
+    const baseFreq = amountToFreq(instrumentKey.initialFilterQ)
+    const peekFreq = amountToFreq(
+      instrumentKey.initialFilterQ + instrumentKey.modEnvToFilterFc,
+    )
+    const sustainFreq =
+      baseFreq + (peekFreq - baseFreq) * (1 - instrumentKey.modSustain)
+    filter.frequency.setValueAtTime(baseFreq, now)
+    filter.frequency.linearRampToValueAtTime(
+      peekFreq,
+      now + instrumentKey.modAttack,
+    )
+    filter.frequency.linearRampToValueAtTime(
+      sustainFreq,
+      now + instrumentKey.modAttack + instrumentKey.modDecay,
+    )
 
-    const volume = 1 / 127
-    console.log(volume, now + instrumentKey.volAttack)
-    const now = audioContext.currentTime
+    // volume
+    const volume = velocity / 127
     output.gain.setValueAtTime(0, now)
     output.gain.linearRampToValueAtTime(
       volume * (volume / 127),
@@ -61,40 +79,13 @@ export default class SoundFont {
       now + instrumentKey.volDecay,
     )
 
-    function amountToFreq(val) {
-      return Math.pow(2, (val - 6900) / 1200) * 440
-    }
-
-    // filter.Q.setValueAtTime(
-    //   instrumentKey.initialFilterQ * Math.pow(10, 200),
-    //   now,
-    // )
-    // filter.frequency.setValueAtTime(amountToFreq(instrumentKey.initialFilterFc))
-    // filter.frequency.linearRampToValueAtTime(
-    //   amountToFreq(
-    //     instrumentKey.initialFilterFc + instrumentKey.modEnvToFilterFc,
-    //   ),
-    //   now + instrumentKey.modAttack,
-    // )
-
     bufferSource.connect(filter)
     filter.connect(output)
     output.connect(audioContext.destination)
     bufferSource.start(0, instrumentKey.start / instrumentKey.sampleRate)
-
-    // const sound = new Sound()
-    // sound.output.connect(audioContext.destination)
-    // sound.audioBuffer = audioContext.createBuffer(
-    //   1,
-    //   sample.length,
-    //   instrumentKey.sampleRate,
-    // )
-    // sound.audioBuffer.getChannelData(0).set(sample)
-    // console.log(sound.audioBuffer, sample.length, instrumentKey.sampleRate)
-    // sound.play()
   }
 
-  edit = ({ note, velocity, duration }) => {}
+  nodeOff = ({ note, velocity, duration }) => {}
 
   /* ---------- SoundFont API ---------- */
 
@@ -119,4 +110,8 @@ export default class SoundFont {
   selectInstrumentIndex = index => {
     this.selectedInstrumentIndex = index
   }
+}
+
+function amountToFreq(value) {
+  return Math.pow(2, (value - 6900) / 1200) * 440
 }
