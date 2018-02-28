@@ -112,7 +112,6 @@ export default class SoundFont {
       : await fileToArrayBuffer(file)
     this.data = parseSoundFontFile(arrayBuffer)
     this.instruments = createAllInstruments(this.data.pdta)
-    console.log(this.data, this.instruments)
     this.loading = false
   }
 
