@@ -1,9 +1,8 @@
+import styles          from './Octave.scss'
 import cx              from 'classnames'
 import { noop, times } from 'lodash'
 import PropTypes       from 'prop-types'
 import React           from 'react'
-
-import styles          from './Octave.scss'
 
 const BLACK_KEYS = {
   1: true,

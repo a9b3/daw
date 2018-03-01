@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
-import React     from 'react'
+import styles     from './index.scss'
+import PropTypes  from 'prop-types'
+import React      from 'react'
 
-import Octave    from './Octave'
+import NoteEditor from './NoteEditor'
+import Octave     from './Octave'
 
 export default class PianoRoll extends React.Component {
   static propTypes = {
@@ -12,7 +14,7 @@ export default class PianoRoll extends React.Component {
   }
 
   static defaultProps = {
-    octaveRange: [1, 10],
+    octaveRange: [0, 10],
   }
 
   handleKeyActive = (octave, key) => {
@@ -30,21 +32,10 @@ export default class PianoRoll extends React.Component {
     const nodes = []
     for (let i = octaveRange[1]; i >= octaveRange[0]; i--) {
       nodes.push(
-        <div style={{ display: 'flex' }}>
-          <div
-            style={{
-              padding: '.5em',
-              fontSize: '.8em',
-              alignSelf: 'flex-end',
-              borderBottom: '1px solid black',
-              width: '30px',
-            }}
-          >
-            {i + 1}
-          </div>
-          <div>
+        <div className={styles.octave} key={i}>
+          <div className={styles.info}>{i + 1}</div>
+          <div className={styles.keys}>
             <Octave
-              key={i}
               onKeyActive={this.handleKeyActive.bind(this, i)}
               onKeyInactive={this.handleKeyInactive.bind(this, i)}
               octave={i}
@@ -59,6 +50,15 @@ export default class PianoRoll extends React.Component {
   }
 
   render() {
-    return <div>{this.renderOctaves()}</div>
+    const { octaveRange } = this.props
+    return (
+      <div className={styles['piano-roll']}>
+        <div className={styles.piano}>{this.renderOctaves()}</div>
+        <NoteEditor
+          className={styles['note-editor']}
+          octaveRange={octaveRange}
+        />
+      </div>
+    )
   }
 }

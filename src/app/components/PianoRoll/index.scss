@@ -1,0 +1,33 @@
+.piano-roll {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+
+  .piano {
+    flex: auto 0 0;
+    width: 100px;
+  }
+
+  .note-editor {
+    flex: 1 0 0;
+    background: blue;
+    overflow-x: auto;
+  }
+}
+
+.octave {
+  display: flex;
+
+  .info {
+    padding: .5em;
+    font-size: .8em;
+    align-self: flex-end;
+    border-bottom: 1px solid var(--gray);
+    width: 30px;
+  }
+
+  .keys {
+    width: 100%;
+  }
+}
