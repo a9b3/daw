@@ -37,6 +37,7 @@ export default class PianoRoll extends React.Component {
               fontSize: '.8em',
               alignSelf: 'flex-end',
               borderBottom: '1px solid black',
+              width: '30px',
             }}
           >
             {i + 1}

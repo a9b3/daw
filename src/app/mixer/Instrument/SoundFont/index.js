@@ -1,10 +1,10 @@
-import { action, observable, computed }             from 'mobx'
+import { action, observable, computed } from 'mobx'
 
-import { URLTOArrayBuffer, fileToArrayBuffer }      from 'mixer/utils'
+import { URLTOArrayBuffer, fileToArrayBuffer } from 'mixer/utils'
 
 import { parseSoundFontFile, createAllInstruments } from './riff'
 
-import audioContext                                 from '../../audioContext'
+import audioContext from '../../audioContext'
 
 export default class SoundFont {
   activeNotes = observable.map()
@@ -119,27 +119,18 @@ export default class SoundFont {
     if (!instData) return
 
     const now = audioContext.currentTime
-    const endTime = now + 0.15
 
     const { gain, bufferSource, filter } = this.activeNotes.get(note)
 
     gain.gain.cancelScheduledValues(now)
     gain.gain.setTargetAtTime(0, now, 0.11)
 
-    bufferSource.playbackRate.cancelScheduledValues(now)
-    const computedPlaybackRate =
-      instData.basePlaybackRate * Math.pow(Math.pow(2, 1 / 12), 0)
-    bufferSource.playbackRate.setTargetAtTime(computedPlaybackRate, now, 0.11)
-
-    bufferSource.loop = false
-    bufferSource.stop(endTime)
-
     this.activeNotes.delete(note)
     setTimeout(() => {
+      gain.disconnect(0)
       bufferSource.disconnect(0)
       filter.disconnect(0)
-      gain.disconnect(0)
-    }, 0.13 * 1000)
+    }, 1000)
   }
 
   /* ---------- SoundFont API ---------- */
