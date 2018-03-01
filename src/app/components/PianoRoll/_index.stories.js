@@ -46,7 +46,7 @@ export default class PianoRollExample extends React.Component {
     )
 
     return (
-      <div>
+      <div dummy={soundFont.activeNotes.keys()}>
         {soundFont.selectedInstrumentIndex}
         {soundFont.loading && 'loading'}
         <input type="file" onChange={this.handleChange} />
