@@ -1,0 +1,27 @@
+.key {
+  --keySize: 20px;
+  --keyWidth: 50px;
+  --keyActiveColor: var(--brand);
+
+  height: var(--keySize);
+  width: var(--keyWidth);
+  border-bottom: 1px solid var(--lightgray);
+  border-right: 1px solid var(--lightgray);
+  user-select: none;
+  font-size: .8em;
+  cursor: pointer;
+
+  &--white {
+    background: var(--white);
+    color: var(--gray);
+  }
+
+  &--black {
+    background: var(--black);
+    color: #{"rgba(var(--whiteRGB), .5)"};
+  }
+
+  &--active {
+    background: var(--keyActiveColor);
+  }
+}

@@ -504,7 +504,7 @@ function createNoteInfo({ sampleHeaders, generator, preset }) {
     get(generator, 'coarseTune.amount', 0) +
     get(generator, 'fineTune.amount', 0) / 100
   const scaleTuning = get(generator, 'scaleTuning.amount', 100) / 100
-  for (let i = generator.keyRange.lo; i < generator.keyRange.hi; i++) {
+  for (let i = generator.keyRange.lo; i <= generator.keyRange.hi; i++) {
     if (preset[i]) {
       continue
     }

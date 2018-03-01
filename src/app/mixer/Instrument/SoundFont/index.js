@@ -7,7 +7,7 @@ import { parseSoundFontFile, createAllInstruments } from './riff'
 import audioContext                                 from '../../audioContext'
 
 export default class SoundFont {
-  activeNotes = {}
+  activeNotes = observable.map()
   data = undefined
   // return from createAllInstruments
   // only indexes 0 and 128 are occupied
@@ -18,18 +18,22 @@ export default class SoundFont {
   @computed
   get selectedInstrument() {
     const bank = this.instruments[0]
+    if (!bank) return
     const instrument = bank[this.selectedInstrumentIndex]
     return instrument
   }
 
   /* ---------- Instrument API ---------- */
 
+  @action
   noteOn = ({ note, velocity = 1 } = {}) => {
     // array<array<{sample, ...}>>
     const instrument = this.selectedInstrument
+    if (!instrument) return
     const instrumentKey = instrument[note]
+    if (!instrumentKey) return
 
-    if (this.activeNotes[note]) {
+    if (this.activeNotes.get(note)) {
       return
     }
 
@@ -39,7 +43,7 @@ export default class SoundFont {
       filter: audioContext.createBiquadFilter(),
       gain: audioContext.createGain(),
     }
-    this.activeNotes[note] = noteNodes
+    this.activeNotes.set(note, noteNodes)
     const now = audioContext.currentTime
 
     // sample
@@ -54,10 +58,19 @@ export default class SoundFont {
 
     // buffer source
     noteNodes.bufferSource.buffer = buffer
-    bufferSource.loop = true
-    bufferSource.loopStart = instrumentKey.loopStart / instrumentKey.sampleRate
-    bufferSource.loopEnd = instrumentKey.loopEnd / instrumentKey.sampleRate
-    // TODO update pitch bend
+    noteNodes.bufferSource.loop = true
+    noteNodes.bufferSource.loopStart =
+      instrumentKey.loopStart / instrumentKey.sampleRate
+    noteNodes.bufferSource.loopEnd =
+      instrumentKey.loopEnd / instrumentKey.sampleRate
+
+    // pitch
+    const computedPlaybackRate =
+      instrumentKey.basePlaybackRate * Math.pow(Math.pow(2, 1 / 12), 0)
+    noteNodes.bufferSource.playbackRate.setValueAtTime(
+      computedPlaybackRate,
+      now,
+    )
 
     // filter
     noteNodes.filter.type = 'lowpass'
@@ -104,15 +117,18 @@ export default class SoundFont {
     )
   }
 
+  @action
   noteOff = ({ note }) => {
-    if (!this.activeNotes[note]) {
+    if (!this.activeNotes.get(note)) {
       return
     }
     const instrument = this.selectedInstrument
+    if (!instrument) return
     const instrumentKey = instrument[note]
+    if (!instrumentKey) return
 
     const now = audioContext.currentTime
-    const noteNodes = this.activeNotes[note]
+    const noteNodes = this.activeNotes.get(note)
     noteNodes.gain.gain.cancelScheduledValues(0)
     noteNodes.gain.gain.linearRampToValueAtTime(
       0,
@@ -122,9 +138,12 @@ export default class SoundFont {
     noteNodes.bufferSource.loop = false
     noteNodes.bufferSource.stop(now + instrumentKey.volRelease)
 
-    noteNodes.bufferSource.disconnect(0)
-    noteNodes.filter.disconnect(0)
-    noteNodes.gain.disconnect(0)
+    setTimeout(() => {
+      noteNodes.bufferSource.disconnect(0)
+      noteNodes.filter.disconnect(0)
+      noteNodes.gain.disconnect(0)
+      this.activeNotes.delete(note)
+    }, instrumentKey.volRelease * 1000)
   }
 
   /* ---------- SoundFont API ---------- */
@@ -144,6 +163,8 @@ export default class SoundFont {
     this.data = parseSoundFontFile(arrayBuffer)
     this.instruments = createAllInstruments(this.data.pdta)
     this.loading = false
+    console.log(this.data)
+    console.log(this.instruments)
   }
 
   @action
