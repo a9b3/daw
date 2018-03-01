@@ -80,7 +80,7 @@ export default class List extends React.PureComponent {
   }
 
   _handleMeasure = value => {
-    console.log(value)
+    // console.log(value)
   }
 
   handleScroll = event => {

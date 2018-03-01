@@ -23,7 +23,11 @@ export default class PianoRollExample extends React.Component {
   handleInstrument = event => {
     const { soundFont } = this.props
     soundFont.selectInstrumentIndex(event.target.value)
-    soundFont.noteOn({ note: 43, velocity: 0.1 })
+  }
+
+  handleBank = event => {
+    const { soundFont } = this.props
+    soundFont.selectBankIndex(event.target.value)
   }
 
   handleNoteOn = note => {
@@ -38,24 +42,31 @@ export default class PianoRollExample extends React.Component {
 
   render() {
     const { soundFont } = this.props
-    const instrumentNames = (get(soundFont, 'instruments.0') || []).map(
-      ({ name }, i) => ({
-        label: name,
-        value: i,
-      }),
-    )
 
     return (
       <div dummy={soundFont.activeNotes.keys()}>
-        {soundFont.selectedInstrumentIndex}
         {soundFont.loading && 'loading'}
         <input type="file" onChange={this.handleChange} />
+        <select id="" name="" onChange={this.handleBank}>
+          {soundFont.instruments.map((bank, i) => {
+            return (
+              <option value={i} key={i}>
+                {i}
+              </option>
+            )
+          })}
+          <option value="" />
+        </select>
         <select id="" name="" onChange={this.handleInstrument}>
-          {instrumentNames.map((inst, i) => (
-            <option key={i} value={i}>
-              {inst.label}
-            </option>
-          ))}
+          {(soundFont.instruments[soundFont.selectedBankIndex] || []).map(
+            (inst, i) => {
+              return (
+                <option value={i} key={i}>
+                  {inst.name}
+                </option>
+              )
+            },
+          )}
         </select>
         <PianoRoll
           noteOn={this.handleNoteOn}

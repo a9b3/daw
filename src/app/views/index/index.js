@@ -27,7 +27,6 @@ export default class Index extends React.Component {
   render() {
     const { sequencer } = this.props
 
-    console.log(`hererendered`, sequencer)
     return (
       <div className={styles.index}>
         <DevTools />

@@ -14,10 +14,11 @@ export default class SoundFont {
   instruments = []
   @observable loading = false
   @observable selectedInstrumentIndex = undefined
+  @observable selectedBankIndex = undefined
 
   @computed
   get selectedInstrument() {
-    const bank = this.instruments[0]
+    const bank = this.instruments[this.selectedBankIndex]
     if (!bank) return
     const instrument = bank[this.selectedInstrumentIndex]
     return instrument
@@ -30,8 +31,19 @@ export default class SoundFont {
     // array<array<{sample, ...}>>
     const instrument = this.selectedInstrument
     if (!instrument) return
-    const instrumentKey = instrument[note]
-    if (!instrumentKey) return
+    const instData = instrument[note]
+    if (!instData) return
+    const {
+      initialFilterQ,
+      basePlaybackRate,
+      loopStart,
+      sampleRate,
+      loopEnd,
+      end,
+      modAttack,
+      modSustain,
+      modDecay,
+    } = instData
 
     if (this.activeNotes.get(note)) {
       return
@@ -43,78 +55,57 @@ export default class SoundFont {
       filter: audioContext.createBiquadFilter(),
       gain: audioContext.createGain(),
     }
+    const { bufferSource, filter, gain } = noteNodes
     this.activeNotes.set(note, noteNodes)
     const now = audioContext.currentTime
 
     // sample
-    let sample = instrumentKey.sample
-    sample = sample.subarray(0, sample.length + instrumentKey.end)
-    const buffer = audioContext.createBuffer(
-      1,
-      sample.length,
-      instrumentKey.sampleRate,
-    )
+    let sample = instData.sample
+    sample = sample.subarray(0, sample.length + end)
+    const buffer = audioContext.createBuffer(1, sample.length, sampleRate)
     buffer.getChannelData(0).set(sample)
 
     // buffer source
-    noteNodes.bufferSource.buffer = buffer
-    noteNodes.bufferSource.loop = true
-    noteNodes.bufferSource.loopStart =
-      instrumentKey.loopStart / instrumentKey.sampleRate
-    noteNodes.bufferSource.loopEnd =
-      instrumentKey.loopEnd / instrumentKey.sampleRate
+    bufferSource.buffer = buffer
+    bufferSource.loop = true
+    bufferSource.loopStart = loopStart / sampleRate
+    bufferSource.loopEnd = loopEnd / sampleRate
 
     // pitch
     const computedPlaybackRate =
-      instrumentKey.basePlaybackRate * Math.pow(Math.pow(2, 1 / 12), 0)
-    noteNodes.bufferSource.playbackRate.setValueAtTime(
-      computedPlaybackRate,
-      now,
-    )
+      basePlaybackRate * Math.pow(Math.pow(2, 1 / 12), 0)
+    bufferSource.playbackRate.setValueAtTime(computedPlaybackRate, now)
 
     // filter
-    noteNodes.filter.type = 'lowpass'
-    noteNodes.filter.Q.setValueAtTime(
-      instrumentKey.initialFilterQ * Math.pow(10, 200),
-      now,
-    )
-    const baseFreq = amountToFreq(instrumentKey.initialFilterQ)
+    filter.type = 'lowpass'
+    filter.Q.setValueAtTime(initialFilterQ * Math.pow(10, 200), now)
+    const baseFreq = amountToFreq(instData.initialFilterQ)
     const peekFreq = amountToFreq(
-      instrumentKey.initialFilterQ + instrumentKey.modEnvToFilterFc,
+      instData.initialFilterQ + instData.modEnvToFilterFc,
     )
-    const sustainFreq =
-      baseFreq + (peekFreq - baseFreq) * (1 - instrumentKey.modSustain)
-    noteNodes.filter.frequency.setValueAtTime(baseFreq, now)
-    noteNodes.filter.frequency.linearRampToValueAtTime(
-      peekFreq,
-      now + instrumentKey.modAttack,
-    )
-    noteNodes.filter.frequency.linearRampToValueAtTime(
+    const sustainFreq = baseFreq + (peekFreq - baseFreq) * (1 - modSustain)
+    filter.frequency.setValueAtTime(baseFreq, now)
+    filter.frequency.linearRampToValueAtTime(peekFreq, now + modAttack)
+    filter.frequency.linearRampToValueAtTime(
       sustainFreq,
-      now + instrumentKey.modAttack + instrumentKey.modDecay,
+      now + modAttack + modDecay,
     )
 
     // volume
-    const volume = velocity / 127
-    noteNodes.gain.gain.setValueAtTime(0, now)
-    noteNodes.gain.gain.linearRampToValueAtTime(
-      volume * (volume / 127),
-      now + instrumentKey.volAttack,
-    )
-    noteNodes.gain.gain.linearRampToValueAtTime(
-      volume * (1 - instrumentKey.volSustain),
-      now + instrumentKey.volDecay,
+    const volume = 1 / 127
+    gain.gain.setValueAtTime(0, now)
+    gain.gain.linearRampToValueAtTime(volume, now + instData.volAttack)
+    gain.gain.linearRampToValueAtTime(
+      volume * (1 - instData.volSustain),
+      now + instData.volDecay,
     )
 
     // connect all nodes
-    noteNodes.bufferSource.connect(noteNodes.filter)
-    noteNodes.filter.connect(noteNodes.gain)
-    noteNodes.gain.connect(audioContext.destination)
+    bufferSource.connect(filter)
+    filter.connect(gain)
+    gain.connect(audioContext.destination)
 
-    noteNodes.bufferSource.start(
-      0,
-      instrumentKey.start / instrumentKey.sampleRate,
-    )
+    bufferSource.start(0, instData.start / sampleRate)
   }
 
   @action
@@ -124,26 +115,31 @@ export default class SoundFont {
     }
     const instrument = this.selectedInstrument
     if (!instrument) return
-    const instrumentKey = instrument[note]
-    if (!instrumentKey) return
+    const instData = instrument[note]
+    if (!instData) return
 
     const now = audioContext.currentTime
-    const noteNodes = this.activeNotes.get(note)
-    noteNodes.gain.gain.cancelScheduledValues(0)
-    noteNodes.gain.gain.linearRampToValueAtTime(
-      0,
-      now + instrumentKey.volRelease,
-    )
+    const endTime = now + 0.15
 
-    noteNodes.bufferSource.loop = false
-    noteNodes.bufferSource.stop(now + instrumentKey.volRelease)
+    const { gain, bufferSource, filter } = this.activeNotes.get(note)
+
+    gain.gain.cancelScheduledValues(now)
+    gain.gain.setTargetAtTime(0, now, 0.11)
+
+    bufferSource.playbackRate.cancelScheduledValues(now)
+    const computedPlaybackRate =
+      instData.basePlaybackRate * Math.pow(Math.pow(2, 1 / 12), 0)
+    bufferSource.playbackRate.setTargetAtTime(computedPlaybackRate, now, 0.11)
+
+    bufferSource.loop = false
+    bufferSource.stop(endTime)
 
     this.activeNotes.delete(note)
-    setTimeout(() => {
-      noteNodes.bufferSource.disconnect(0)
-      noteNodes.filter.disconnect(0)
-      noteNodes.gain.disconnect(0)
-    }, instrumentKey.volRelease * 1000)
+    // setTimeout(() => {
+    //   bufferSource.disconnect(0)
+    //   filter.disconnect(0)
+    //   gain.disconnect(0)
+    // }, 0.13 * 1000)
   }
 
   /* ---------- SoundFont API ---------- */
@@ -163,13 +159,16 @@ export default class SoundFont {
     this.data = parseSoundFontFile(arrayBuffer)
     this.instruments = createAllInstruments(this.data.pdta)
     this.loading = false
-    console.log(this.data)
-    console.log(this.instruments)
   }
 
   @action
   selectInstrumentIndex = index => {
     this.selectedInstrumentIndex = index
+  }
+
+  @action
+  selectBankIndex = index => {
+    this.selectedBankIndex = index
   }
 }
 
