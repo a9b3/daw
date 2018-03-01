@@ -138,11 +138,11 @@ export default class SoundFont {
     noteNodes.bufferSource.loop = false
     noteNodes.bufferSource.stop(now + instrumentKey.volRelease)
 
+    this.activeNotes.delete(note)
     setTimeout(() => {
       noteNodes.bufferSource.disconnect(0)
       noteNodes.filter.disconnect(0)
       noteNodes.gain.disconnect(0)
-      this.activeNotes.delete(note)
     }, instrumentKey.volRelease * 1000)
   }
 

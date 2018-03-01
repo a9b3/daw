@@ -1,4 +1,3 @@
-import { times } from 'lodash'
 import PropTypes from 'prop-types'
 import React     from 'react'
 
@@ -28,7 +27,6 @@ export default class PianoRoll extends React.Component {
 
   renderOctaves = () => {
     const { octaveRange, activeKeys } = this.props
-
     const nodes = []
     for (let i = octaveRange[1]; i >= octaveRange[0]; i--) {
       nodes.push(
@@ -55,6 +53,7 @@ export default class PianoRoll extends React.Component {
         </div>,
       )
     }
+
     return nodes
   }
 
