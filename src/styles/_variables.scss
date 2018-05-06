@@ -1,3 +1,5 @@
+// these css variables are global to this application, they will be loaded in
+// the main index.scss
 :root {
   /* RGB */
   --whiteRGB            : 255, 255, 255;
@@ -16,20 +18,20 @@
   --greenRGB            : 0, 218, 71;
 
   /* Colors */
-  --white               : rgb(var(--whiteRGB));
-  --black               : rgb(var(--blackRGB));
-  --dark                : rgb(var(--darkRGB));
-  --gray                : rgb(var(--grayRGB));
-  --lightgray           : rgb(var(--lightgrayRGB));
-  --cyan                : rgb(var(--cyanRGB));
-  --blue                : rgb(var(--blueRGB));
-  --yellow              : rgb(var(--yellowRGB));
-  --pink                : rgb(var(--pinkRGB));
-  --green               : rgb(var(--greenRGB));
-  --red                 : rgb(var(--redRGB));
-  --slate               : rgb(var(--slateRGB));
-  --brand               : rgb(var(--brandRGB));
-  --green               : rgb(var(--greenRGB));
+  --white               : #{'rgb(var(--whiteRGB))'};
+  --black               : #{'rgb(var(--blackRGB))'};
+  --dark                : #{'rgb(var(--darkRGB))'};
+  --gray                : #{'rgb(var(--grayRGB))'};
+  --lightgray           : #{'rgb(var(--lightgrayRGB))'};
+  --cyan                : #{'rgb(var(--cyanRGB))'};
+  --blue                : #{'rgb(var(--blueRGB))'};
+  --yellow              : #{'rgb(var(--yellowRGB))'};
+  --pink                : #{'rgb(var(--pinkRGB))'};
+  --green               : #{'rgb(var(--greenRGB))'};
+  --red                 : #{'rgb(var(--redRGB))'};
+  --slate               : #{'rgb(var(--slateRGB))'};
+  --brand               : #{'rgb(var(--brandRGB))'};
+  --green               : #{'rgb(var(--greenRGB))'};
 
   /* Semantic Colors */
   --error               : var(--red);

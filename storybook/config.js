@@ -1,8 +1,7 @@
 import { configure } from '@storybook/react'
 
 // import global styles here
-import '../src/styles/index.scss'
-import '../src/styles/shared.css'
+import '../src/styles/global.scss'
 
 function loadStories() {
   const req = require.context('../src', true, /\.stories\.js$/)

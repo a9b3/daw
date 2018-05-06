@@ -1,13 +1,14 @@
 import styles               from './index.scss'
+
 import { inject, observer } from 'mobx-react'
 import DevTools             from 'mobx-react-devtools'
 import PropTypes            from 'prop-types'
 import React                from 'react'
 
-import { Sound }            from 'app/mixer'
+import GlobalControls       from 'components/GlobalControls'
+import { Sound }            from 'mixer'
 
 import SequencerLayout      from './SequencerLayout'
-import GlobalControls       from 'components/GlobalControls'
 
 @inject('sequencer')
 @observer

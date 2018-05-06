@@ -1,7 +1,6 @@
-import faker                  from 'faker'
-import { action, observable } from 'mobx'
+import faker         from 'faker'
 
-import { Sequencer }          from 'app/mixer'
+import { Sequencer } from 'mixer'
 
 export default {
   sequencer: new Sequencer({

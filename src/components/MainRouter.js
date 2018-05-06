@@ -1,10 +1,10 @@
-import appState          from 'app/mobx'
-import { Provider }      from 'mobx-react'
-import React             from 'react'
-import { Route }         from 'react-router'
+import { Provider } from 'mobx-react'
+import React from 'react'
+import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 
-import Index             from 'app/views/index'
+import appState from 'mobx/appState'
+import Index from 'views/index'
 
 export default function MainRouter() {
   return (
